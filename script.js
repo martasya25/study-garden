@@ -1341,73 +1341,122 @@ function nextQuestion() {
 
 }
 
+/* =====================================================
+   SIMPAN TANAMAN KE KEBUN DATABASE
+===================================================== */
 
+async function savePlantToDatabase(plant) {
+
+    if (!game.id_pengguna) {
+        console.error("ID pengguna tidak ditemukan.");
+        return;
+    }
+
+    if (!plant.id_tanaman) {
+        console.error("ID tanaman tidak ditemukan.");
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+            .from("kebun_pengguna")
+            .insert({
+                id_pengguna: game.id_pengguna,
+                id_tanaman: plant.id_tanaman,
+                posisi: null,
+                persentase_pertumbuhan: 0,
+                status_tanaman: "Tumbuh"
+            });
+
+    if (error) {
+
+        console.error(
+            "Gagal menyimpan tanaman:",
+            error
+        );
+
+        return;
+    }
+
+    console.log(
+        "Tanaman berhasil disimpan ke database:",
+        plant
+    );
+}
 /* =====================================================
    SELESAI QUIZ
 ===================================================== */
-
 async function finishQuiz() {
     console.log("FINISH QUIZ TERPANGGIL");
+
     await saveQuizResult();
+
     /*
        BONUS SELESAI QUIZ
     */
 
     game.xp += 20;
-
     game.coins += 20;
-
     game.water += 1;
 
-
     /*
-       TANAMAN BARU
+       TANAMAN BARU DARI DATABASE
     */
 
-    const plantTypes = [
+    const { data: plants, error } =
+        await supabaseClient
+            .from("data_tanaman")
+            .select("*");
 
-        {
-            name: "Bibit Bunga",
-            icon: "🌱"
-        },
+    if (error) {
 
-        {
-            name: "Tanaman Hijau",
-            icon: "🌿"
-        },
+        console.error(
+            "Gagal mengambil data tanaman:",
+            error
+        );
 
-        {
-            name: "Bunga",
-            icon: "🌷"
-        },
+        return;
+    }
 
-        {
-            name: "Bunga Matahari",
-            icon: "🌻"
-        }
+    if (!plants || plants.length === 0) {
 
-    ];
+        console.error(
+            "Data tanaman belum tersedia."
+        );
 
+        return;
+    }
 
     const randomPlant =
-        plantTypes[
+        plants[
             Math.floor(
-                Math.random() *
-                plantTypes.length
+                Math.random() * plants.length
             )
         ];
 
+    const plantForGame = {
 
-    game.plants.push({
+        id_tanaman:
+            randomPlant.id_tanaman,
 
-        name: randomPlant.name,
+        name:
+            randomPlant.nama_tanaman,
 
-        icon: randomPlant.icon,
+        icon:
+            randomPlant.jenis_tanaman === "Bunga"
+                ? "🌷"
+                : "🌿",
 
         growth: 0
+    };
 
-    });
+    game.plants.push(
+        plantForGame
+    );
 
+    await savePlantToDatabase(
+        plantForGame
+    );
 
     saveGame();
 
@@ -1415,16 +1464,13 @@ async function finishQuiz() {
 
     renderPlants();
 
-
     document.getElementById(
         "quizBox"
     ).style.display = "none";
 
-
     document.getElementById(
         "subjectBox"
     ).style.display = "block";
-
 
     alert(
         "🎉 Quiz selesai!\n\n" +
@@ -1433,13 +1479,8 @@ async function finishQuiz() {
         "💧 +1 air\n\n" +
         "🌱 Tanaman baru masuk ke kebun!"
     );
-
 }
 
-
-/* =====================================================
-   SIMPAN HASIL QUIZ KE DATABASE
-===================================================== */
 /* =====================================================
    SIMPAN HASIL QUIZ KE DATABASE
 ===================================================== */
