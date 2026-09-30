@@ -1556,6 +1556,8 @@ async function saveQuizResult() {
             nilai
         }
     );
+    console.log("=== SAVE QUIZ SELESAI ===");
+return true;
 }
 
 
