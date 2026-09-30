@@ -1898,6 +1898,41 @@ await window.updatePlantInDatabase(
 }
 
 /* =====================================================
+   PANEN TANAMAN
+===================================================== */
+
+function harvestPlant(index) {
+
+    const plant = game.plants[index];
+
+    if (!plant) {
+        return;
+    }
+
+    if (plant.growth < 100) {
+        alert("🌱 Tanaman belum siap dipanen!");
+        return;
+    }
+
+    // Hapus tanaman dari kebun
+    game.plants.splice(index, 1);
+
+    // Tambah 1 hati
+    game.lives += 1;
+
+    // Simpan perubahan
+    saveGame();
+
+    // Perbarui tampilan
+    updateUI();
+    renderPlants();
+
+    alert(
+        "🌾 Panen berhasil!\n\n" +
+        "❤️ +1 hati"
+    );
+}
+/* =====================================================
    TOKO
 ===================================================== */
 
