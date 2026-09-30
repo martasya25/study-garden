@@ -1756,15 +1756,18 @@ function renderPlants() {
 ${plant.growth >= 100 ? `
     <button
         type="button"
-        class="water-button"
+        class="water-button harvest-button"
         style="
             background:#e91e63;
+            position:relative;
+            z-index:9999;
+            pointer-events:auto;
         "
-        onclick="harvestPlant(${index})"
     >
         🌾 Panen +1 ❤️
     </button>
 ` : `
+
     <button
         type="button"
         class="water-button"
@@ -1778,14 +1781,33 @@ ${plant.growth >= 100 ? `
             `;
 
 
-            container.appendChild(element);
+const harvestButton =
+    element.querySelector(".harvest-button");
+
+if (harvestButton) {
+
+    harvestButton.addEventListener(
+        "click",
+        function() {
+
+            console.log(
+                "PANEN DIKLIK:",
+                index
+            );
+
+            window.harvestPlant(index);
 
         }
     );
 
 }
 
+            container.appendChild(element);
 
+        }
+    );
+
+}
 /* =====================================================
    UPDATE PERTUMBUHAN TANAMAN KE DATABASE
 ===================================================== */
