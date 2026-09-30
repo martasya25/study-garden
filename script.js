@@ -2068,9 +2068,8 @@ async function registerUser() {
                 profileError
             );
 
-            authMessage.textContent =
-                "Akun berhasil dibuat, tetapi data profil gagal disimpan.";
-
+authMessage.textContent =
+    "Profil gagal disimpan: " + profileError.message;
             return;
         }
 
