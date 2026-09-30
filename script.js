@@ -3347,6 +3347,44 @@ function startMaterialQuiz(materialId, subject) {
     startQuiz(subject);
 }
 
+/* =====================================================
+   KEMBALI DARI KUIS KE MATA PELAJARAN
+===================================================== */
+
+function backToSubjectsFromQuiz() {
+
+    const quizBox =
+        document.getElementById("quizBox");
+
+    const subjectBox =
+        document.getElementById("subjectBox");
+
+    const materialBox =
+        document.getElementById("materialBox");
+
+    const materialContentBox =
+        document.getElementById("materialContentBox");
+
+    if (quizBox) {
+        quizBox.style.display = "none";
+    }
+
+    if (subjectBox) {
+        subjectBox.style.display = "block";
+    }
+
+    if (materialBox) {
+        materialBox.style.display = "none";
+    }
+
+    if (materialContentBox) {
+        materialContentBox.style.display = "none";
+    }
+
+    answerLocked = false;
+
+    window.scrollTo(0, 0);
+}
 
 /* =====================================================
    KEMBALI KE DAFTAR MATERI
