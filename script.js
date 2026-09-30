@@ -1901,6 +1901,7 @@ function saveProfile() {
 /* =====================================================
    START APLIKASI
 ===================================================== */
+
 document.addEventListener("DOMContentLoaded", function() {
 
     loadGame();
@@ -1914,100 +1915,135 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
+
     // TOMBOL SIMPAN PASSWORD BARU
     const updatePasswordButton =
         document.getElementById("updatePasswordButton");
 
     if (updatePasswordButton) {
+
         updatePasswordButton.addEventListener(
             "click",
             function() {
                 updateNewPassword();
             }
         );
+
     }
+
 
     // FORM DAFTAR
     const registerForm =
         document.getElementById("registerForm");
 
     if (registerForm) {
+
         registerForm.addEventListener(
             "submit",
             function(event) {
+
                 event.preventDefault();
                 registerUser();
+
             }
         );
+
     }
+
 
     // FORM LOGIN
     const loginForm =
         document.getElementById("loginForm");
 
     if (loginForm) {
+
         loginForm.addEventListener(
             "submit",
             function(event) {
+
                 event.preventDefault();
                 loginUser();
+
             }
         );
+
     }
+
 
     // LUPA PASSWORD
     const forgotPasswordLink =
         document.getElementById("forgotPasswordLink");
 
     if (forgotPasswordLink) {
+
         forgotPasswordLink.addEventListener(
             "click",
             function(event) {
+
                 event.preventDefault();
                 showForgotPassword();
+
             }
         );
+
     }
+
 
     // KIRIM LINK RESET
     const sendResetButton =
         document.getElementById("sendResetButton");
 
     if (sendResetButton) {
+
         sendResetButton.addEventListener(
             "click",
             function() {
                 sendResetPassword();
             }
         );
+
     }
+
 
     // KEMBALI KE LOGIN
     const backToLoginButton =
         document.getElementById("backToLoginButton");
 
     if (backToLoginButton) {
+
         backToLoginButton.addEventListener(
             "click",
             function(event) {
+
                 event.preventDefault();
                 backToLogin();
+
             }
         );
+
     }
 
 });
+
+
 /* =====================================================
    PILIH LOGIN / DAFTAR
 ===================================================== */
 
 function showAuthForm(type) {
 
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+    const loginForm =
+        document.getElementById("loginForm");
 
-    const loginTab = document.getElementById("loginTab");
-    const registerTab = document.getElementById("registerTab");
+    const registerForm =
+        document.getElementById("registerForm");
+
+    const loginTab =
+        document.getElementById("loginTab");
+
+    const registerTab =
+        document.getElementById("registerTab");
+
 
     if (type === "register") {
 
@@ -2029,37 +2065,58 @@ function showAuthForm(type) {
 
 }
 
+
 /* =====================================================
    TAMPILKAN HALAMAN LUPA PASSWORD
 ===================================================== */
 
 function showForgotPassword() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registerForm").style.display = "none";
-    document.getElementById("forgotPasswordScreen").style.display = "block";
-    document.getElementById("resetPasswordScreen").style.display = "none";
 
-    document.getElementById("authMessage").textContent = "";
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "registerForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+        "resetPasswordScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "authMessage"
+    ).textContent = "";
+
 }
+
+
 /* =====================================================
    DAFTAR AKUN
 ===================================================== */
 
 async function registerUser() {
 
-    const name = document
-        .getElementById("registerName")
-        .value
-        .trim();
+    const name =
+        document
+            .getElementById("registerName")
+            .value
+            .trim();
 
-    const email = document
-        .getElementById("registerEmail")
-        .value
-        .trim();
+    const email =
+        document
+            .getElementById("registerEmail")
+            .value
+            .trim();
 
-    const password = document
-        .getElementById("registerPassword")
-        .value;
+    const password =
+        document
+            .getElementById("registerPassword")
+            .value;
 
     const authMessage =
         document.getElementById("authMessage");
@@ -2090,20 +2147,22 @@ async function registerUser() {
 
 
     // DAFTAR KE SUPABASE AUTH
-    const { data, error } =
-        await supabaseClient.auth.signUp({
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.signUp({
 
-            email: email,
+        email: email,
 
-            password: password,
+        password: password,
 
-            options: {
-                data: {
-                    nama_pengguna: name
-                }
+        options: {
+            data: {
+                nama_pengguna: name
             }
+        }
 
-        });
+    });
 
 
     // JIKA PENDAFTARAN GAGAL
@@ -2115,7 +2174,8 @@ async function registerUser() {
         );
 
         authMessage.textContent =
-            "Pendaftaran gagal: " + error.message;
+            "Pendaftaran gagal: " +
+            error.message;
 
         return;
     }
@@ -2124,19 +2184,20 @@ async function registerUser() {
     // SIMPAN DATA KE DATA_PENGGUNA
     if (data.user) {
 
-        const { error: profileError } =
-            await supabaseClient
-                .from("data_pengguna")
-                .insert({
+        const {
+            error: profileError
+        } = await supabaseClient
+            .from("data_pengguna")
+            .insert({
 
-                    nama_pengguna: name,
-                    email: email,
-                    level: 1,
-                    xp: 0,
-                    koin: 0,
-                    hati: 5
+                nama_pengguna: name,
+                email: email,
+                level: 1,
+                xp: 0,
+                koin: 0,
+                hati: 5
 
-                });
+            });
 
 
         // JIKA GAGAL SIMPAN PROFIL
@@ -2147,8 +2208,10 @@ async function registerUser() {
                 profileError
             );
 
-authMessage.textContent =
-    "Profil gagal disimpan: " + profileError.message;
+            authMessage.textContent =
+                "Profil gagal disimpan: " +
+                profileError.message;
+
             return;
         }
 
@@ -2182,14 +2245,16 @@ authMessage.textContent =
 
 async function loginUser() {
 
-    const email = document
-        .getElementById("loginEmail")
-        .value
-        .trim();
+    const email =
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
 
-    const password = document
-        .getElementById("loginPassword")
-        .value;
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
 
     const authMessage =
         document.getElementById("authMessage");
@@ -2212,29 +2277,39 @@ async function loginUser() {
     /* -------------------------------------------------
        CEK EMAIL DI DATA PENGGUNA
     ------------------------------------------------- */
-const {
-    data: profile,
-    error: profileError
-} = await supabaseClient
-    .from("data_pengguna")
-    .select("email")
-    .eq("email", email)
-    .maybeSingle();
 
-if (profileError) {
-    console.error("Profile check error:", profileError);
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("data_pengguna")
+        .select("email")
+        .eq("email", email)
+        .maybeSingle();
 
-    authMessage.textContent =
-        "Gagal mengecek data pengguna: " + profileError.message;
 
-    return;
-}
+    if (profileError) {
 
-if (!profile) {
-    authMessage.textContent =
-        "Email yang digunakan belum terdaftar.";
-    return;
-}
+        console.error(
+            "Profile check error:",
+            profileError
+        );
+
+        authMessage.textContent =
+            "Gagal mengecek data pengguna: " +
+            profileError.message;
+
+        return;
+    }
+
+
+    if (!profile) {
+
+        authMessage.textContent =
+            "Email yang digunakan belum terdaftar.";
+
+        return;
+    }
 
 
     /* -------------------------------------------------
@@ -2331,20 +2406,20 @@ function togglePassword(inputId, button) {
 }
 
 
-
 /* =====================================================
    KEMBALI KE LOGIN
 ===================================================== */
 
 function backToLogin() {
 
-document.getElementById(
-    "forgotPasswordScreen"
-).style.setProperty(
-    "display",
-    "none",
-    "important"
-);
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.setProperty(
+        "display",
+        "none",
+        "important"
+    );
+
     document.getElementById(
         "loginForm"
     ).style.display = "block";
@@ -2368,9 +2443,7 @@ async function sendResetPassword() {
 
     const email =
         document
-            .getElementById(
-                "forgotPasswordEmail"
-            )
+            .getElementById("forgotPasswordEmail")
             .value
             .trim();
 
@@ -2379,6 +2452,8 @@ async function sendResetPassword() {
             "forgotPasswordMessage"
         );
 
+
+    // CEK EMAIL
     if (!email) {
 
         message.textContent =
@@ -2387,20 +2462,26 @@ async function sendResetPassword() {
         return;
     }
 
+
     message.textContent =
         "Mengirim link reset password...";
 
-    const { error } =
-        await supabaseClient.auth
-            .resetPasswordForEmail(
-                email,
-                {
-                    redirectTo:
-                        window.location.origin +
-                        window.location.pathname
-                }
-            );
 
+    // KIRIM LINK RESET DARI SUPABASE
+    const {
+        error
+    } = await supabaseClient.auth
+        .resetPasswordForEmail(
+            email,
+            {
+                redirectTo:
+                    window.location.origin +
+                    window.location.pathname
+            }
+        );
+
+
+    // JIKA GAGAL
     if (error) {
 
         console.error(
@@ -2415,60 +2496,116 @@ async function sendResetPassword() {
         return;
     }
 
+
+    // BERHASIL
     message.textContent =
         "Link reset password sudah dikirim. Cek email kamu.";
+
 }
+
+
 /* =====================================================
    RESET PASSWORD
 ===================================================== */
 
 function showResetPasswordScreen() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registerForm").style.display = "none";
-    document.getElementById("forgotPasswordScreen").style.display = "none";
-    document.getElementById("resetPasswordScreen").style.display = "block";
 
-    document.getElementById("authMessage").textContent = "";
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "registerForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "resetPasswordScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+        "authMessage"
+    ).textContent = "";
+
 }
+
+
+/* =====================================================
+   SIMPAN PASSWORD BARU
+===================================================== */
+
 async function updateNewPassword() {
 
     const password =
-        document.getElementById("newPassword").value;
+        document.getElementById(
+            "newPassword"
+        ).value;
 
     const confirmPassword =
-        document.getElementById("confirmNewPassword").value;
+        document.getElementById(
+            "confirmNewPassword"
+        ).value;
 
     const message =
-        document.getElementById("resetPasswordMessage");
+        document.getElementById(
+            "resetPasswordMessage"
+        );
 
+
+    // CEK INPUT
     if (!password || !confirmPassword) {
+
         message.textContent =
             "Password baru harus diisi.";
+
         return;
     }
 
+
+    // CEK PANJANG PASSWORD
     if (password.length < 6) {
+
         message.textContent =
             "Password minimal 6 karakter.";
+
         return;
     }
 
+
+    // CEK KECOCOKAN PASSWORD
     if (password !== confirmPassword) {
+
         message.textContent =
             "Password tidak sama.";
+
         return;
     }
+
 
     message.textContent =
         "Menyimpan password baru...";
 
-    const { error } =
-        await supabaseClient.auth.updateUser({
-            password: password
-        });
 
+    // UPDATE PASSWORD DI SUPABASE
+    const {
+        error
+    } = await supabaseClient.auth.updateUser({
+
+        password: password
+
+    });
+
+
+    // JIKA GAGAL
     if (error) {
-        console.error("Update password error:", error);
+
+        console.error(
+            "Update password error:",
+            error
+        );
 
         message.textContent =
             "Gagal mengubah password: " +
@@ -2477,29 +2614,51 @@ async function updateNewPassword() {
         return;
     }
 
+
+    // BERHASIL
     message.textContent =
         "Password berhasil diubah! Silakan masuk kembali.";
 
-    document.getElementById("newPassword").value = "";
-    document.getElementById("confirmNewPassword").value = "";
 
+    // KOSONGKAN INPUT
+    document.getElementById(
+        "newPassword"
+    ).value = "";
+
+    document.getElementById(
+        "confirmNewPassword"
+    ).value = "";
+
+
+    // KELUARKAN AKUN
     await supabaseClient.auth.signOut();
 
+
+    // KEMBALI KE LOGIN
     setTimeout(function() {
 
-        document.getElementById("resetPasswordScreen").style.display =
-            "none";
+        document.getElementById(
+            "resetPasswordScreen"
+        ).style.display = "none";
 
-        document.getElementById("loginForm").style.display =
-            "block";
+        document.getElementById(
+            "loginForm"
+        ).style.display = "block";
 
-        document.getElementById("loginTab").classList.add("active");
-        document.getElementById("registerTab").classList.remove("active");
+        document.getElementById(
+            "loginTab"
+        ).classList.add("active");
+
+        document.getElementById(
+            "registerTab"
+        ).classList.remove("active");
 
         message.textContent = "";
 
     }, 1500);
+
 }
+
 
 /* =====================================================
    AMBIL DATA PROFIL DARI DATABASE
