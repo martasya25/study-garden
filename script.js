@@ -1363,7 +1363,6 @@ const { data, error } =
         .insert({
             id_pengguna: game.id_pengguna,
             id_tanaman: plant.id_tanaman,
-            posisi: null,
             persentase_pertumbuhan: 0,
             status_tanaman: "Tumbuh"
         })
