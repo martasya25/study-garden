@@ -3346,22 +3346,7 @@ function startMaterialQuiz(materialId, subject) {
 
     startQuiz(subject);
 }
-/* =====================================================
-   KEMBALI KE MATA PELAJARAN
-===================================================== */
 
-function backToSubjects() {
-
-    document.getElementById(
-        "materialBox"
-    ).style.display = "none";
-
-    document.getElementById(
-        "subjectBox"
-    ).style.display = "block";
-
-    window.scrollTo(0, 0);
-}
 
 /* =====================================================
    KEMBALI KE DAFTAR MATERI
