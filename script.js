@@ -2775,3 +2775,307 @@ async function loadUserProfile(email) {
     updateUI();
 
 }
+
+/* =====================================================
+   DATA MATERI
+===================================================== */
+
+const materialData = {
+
+    "persamaan-linear": {
+        title: "Persamaan Linear",
+        category: "Matematika",
+        icon: "🔢",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Persamaan linear adalah persamaan yang memiliki
+                variabel dengan pangkat tertinggi satu.
+            </p>
+
+            <h3>📝 Contoh</h3>
+
+            <p>
+                2x + 4 = 10
+            </p>
+
+            <p>
+                Untuk mencari nilai x:
+                2x = 10 - 4
+                sehingga x = 3.
+            </p>
+        `
+    },
+
+    "fungsi": {
+        title: "Fungsi",
+        category: "Matematika",
+        icon: "📈",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Fungsi adalah hubungan antara dua himpunan
+                yang memasangkan setiap anggota domain dengan
+                tepat satu anggota kodomain.
+            </p>
+
+            <h3>📝 Contoh</h3>
+
+            <p>
+                f(x) = 2x + 1
+            </p>
+        `
+    },
+
+    "teks-eksplanasi": {
+        title: "Teks Eksplanasi",
+        category: "Bahasa Indonesia",
+        icon: "📖",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Teks eksplanasi adalah teks yang menjelaskan
+                proses terjadinya suatu fenomena alam atau sosial.
+            </p>
+
+            <h3>📝 Struktur</h3>
+
+            <p>
+                Struktur teks eksplanasi terdiri dari pernyataan umum,
+                deretan penjelas, dan interpretasi.
+            </p>
+        `
+    },
+
+    "teks-argumentasi": {
+        title: "Teks Argumentasi",
+        category: "Bahasa Indonesia",
+        icon: "✍️",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Teks argumentasi adalah teks yang berisi pendapat
+                yang disertai alasan dan bukti untuk meyakinkan pembaca.
+            </p>
+
+            <h3>📝 Ciri</h3>
+
+            <p>
+                Mengandung pendapat, alasan, fakta, dan bukti.
+            </p>
+        `
+    },
+
+    "procedure-text": {
+        title: "Procedure Text",
+        category: "Bahasa Inggris",
+        icon: "🇬🇧",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Procedure text adalah teks yang menjelaskan
+                langkah-langkah untuk melakukan atau membuat sesuatu.
+            </p>
+
+            <h3>📝 Struktur</h3>
+
+            <p>
+                Goal, materials, dan steps.
+            </p>
+        `
+    },
+
+    "narrative-text": {
+        title: "Narrative Text",
+        category: "Bahasa Inggris",
+        icon: "📚",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Narrative text adalah teks yang menceritakan
+                suatu cerita atau kejadian secara runtut.
+            </p>
+
+            <h3>📝 Struktur</h3>
+
+            <p>
+                Orientation, complication, dan resolution.
+            </p>
+        `
+    },
+
+    "ekosistem": {
+        title: "Ekosistem",
+        category: "IPA",
+        icon: "🌳",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Ekosistem adalah hubungan timbal balik antara
+                makhluk hidup dengan lingkungan di sekitarnya.
+            </p>
+
+            <h3>📝 Komponen</h3>
+
+            <p>
+                Komponen ekosistem terdiri dari komponen biotik
+                dan abiotik.
+            </p>
+        `
+    },
+
+    "sistem-pernapasan": {
+        title: "Sistem Pernapasan",
+        category: "IPA",
+        icon: "🫁",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Sistem pernapasan adalah sistem organ yang
+                digunakan tubuh untuk melakukan pertukaran gas.
+            </p>
+
+            <h3>📝 Organ Pernapasan</h3>
+
+            <p>
+                Organ pernapasan manusia antara lain hidung,
+                faring, laring, trakea, bronkus, dan paru-paru.
+            </p>
+        `
+    },
+
+    "interaksi-sosial": {
+        title: "Interaksi Sosial",
+        category: "IPS",
+        icon: "👥",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Interaksi sosial adalah hubungan timbal balik
+                antara individu atau kelompok dalam kehidupan sosial.
+            </p>
+
+            <h3>📝 Contoh</h3>
+
+            <p>
+                Contohnya adalah kerja sama, diskusi,
+                dan kegiatan gotong royong.
+            </p>
+        `
+    },
+
+    "perubahan-sosial": {
+        title: "Perubahan Sosial",
+        category: "IPS",
+        icon: "🌍",
+        content: `
+            <h3>📖 Pengertian</h3>
+
+            <p>
+                Perubahan sosial adalah perubahan yang terjadi
+                dalam kehidupan masyarakat dari waktu ke waktu.
+            </p>
+
+            <h3>📝 Contoh</h3>
+
+            <p>
+                Perkembangan teknologi komunikasi merupakan salah
+                satu contoh perubahan sosial.
+            </p>
+        `
+    }
+
+};
+
+
+/* =====================================================
+   BUKA MATERI
+===================================================== */
+
+let selectedMaterial = null;
+
+function openMaterial(materialId){
+
+    const material = materialData[materialId];
+
+    if (!material) {
+        console.error("Materi tidak ditemukan:", materialId);
+        return;
+    }
+
+    selectedMaterial = materialId;
+
+    document.getElementById("subjectBox").style.display = "none";
+
+    document.getElementById("quizBox").style.display = "none";
+
+    document.getElementById("materialBox").style.display = "block";
+
+    document.getElementById("materialIcon").textContent =
+        material.icon;
+
+    document.getElementById("materialTitle").textContent =
+        material.title;
+
+    document.getElementById("materialCategory").textContent =
+        material.category;
+
+    document.getElementById("materialContent").innerHTML =
+        material.content;
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   KEMBALI KE DAFTAR MATERI
+===================================================== */
+
+function backToMaterials(){
+
+    document.getElementById("materialBox").style.display = "none";
+
+    document.getElementById("quizBox").style.display = "none";
+
+    document.getElementById("subjectBox").style.display = "block";
+
+    selectedMaterial = null;
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   MULAI KUIS MATERI
+===================================================== */
+
+function startMaterialQuiz(){
+
+    if (!selectedMaterial) {
+        return;
+    }
+
+    const material = materialData[selectedMaterial];
+
+    document.getElementById("materialBox").style.display = "none";
+
+    document.getElementById("quizBox").style.display = "block";
+
+    /*
+       Untuk sementara kita kirim nama kategori
+       ke sistem kuis yang sudah ada.
+    */
+
+    startQuiz(material.category);
+
+    window.scrollTo(0, 0);
+}
