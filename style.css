@@ -1940,3 +1940,34 @@ button:active{
     }
 
 }
+
+/* =====================================================
+   TOMBOL LOGOUT
+===================================================== */
+
+.nav .logout-button {
+    display: block !important;
+    position: relative !important;
+    z-index: 9999 !important;
+
+    border: none !important;
+    background: #ffebee !important;
+    color: #c62828 !important;
+
+    padding: 11px 17px !important;
+    border-radius: 15px !important;
+
+    white-space: nowrap;
+    font-weight: bold;
+    cursor: pointer !important;
+
+    pointer-events: auto !important;
+}
+
+.nav .logout-button:hover {
+    background: #ffcdd2 !important;
+}
+
+.nav .logout-button:active {
+    transform: scale(0.97);
+}
