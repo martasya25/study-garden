@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Study Garden</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ==================================================
+     HALAMAN LOGIN / DAFTAR
+================================================== -->
+
+<div id="authScreen" class="auth-screen">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            🌱
+        </div>
+
+        <h1>Study Garden</h1>
+
+        <p class="auth-subtitle">
+            Belajar, tumbuh, dan bangun kebunmu! 🌷
+        </p>
+
+
+        <!-- TAB LOGIN / DAFTAR -->
+
+        <div class="auth-tabs">
+
+            <button
+                id="loginTab"
+                class="auth-tab active"
+                type="button"
+                onclick="showAuthForm('login')">
+
+                Masuk
+
+            </button>
+
+            <button
+                id="registerTab"
+                class="auth-tab"
+                type="button"
+                onclick="showAuthForm('register')">
+
+                Daftar
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM LOGIN -->
+
+<form id="loginForm" class="auth-form">
+    <h2>👋 Selamat datang!</h2>
+
+    <label>Email</label>
+    <input type="email" id="loginEmail"
+        placeholder="Masukkan email" required>
+
+    <label>Password</label>
+    <input type="password" id="loginPassword"
+        placeholder="Masukkan password" required>
+
+    <button type="button" class="forgot-password-btn"
+        onclick="forgotPassword()">
+        Lupa password?
+    </button>
+
+    <button type="submit" class="auth-submit">
+        🌱 Masuk
+    </button>
+</form>
+
+            <h2>👋 Selamat data
+
+            </button>
+
+        </form>
+
+
+        <!-- FORM DAFTAR -->
+
+        <form
+            id="registerForm"
+            class="auth-form"
+            style="display:none;">
+
+            <h2>🌷 Buat akun baru</h2>
+
+            <label>Nama</label>
+
+            <input
+                type="text"
+                id="registerName"
+                placeholder="Masukkan nama"
+                maxlength="100"
+                required
+            >
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="registerEmail"
+                placeholder="Masukkan email"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="registerPassword"
+                placeholder="Minimal 6 karakter"
+                minlength="6"
+                required
+            >
+
+            <button
+                type="submit"
+                class="auth-submit">
+
+                🌱 Daftar
+
+            </button>
+
+        </form>
+
+
+        <p id="authMessage" class="auth-message"></p>
+
+    </div>
+
+</div>
+
+    <!-- ==================================================
+     HEADER
+================================================== -->
+<div id="mainApp" style="display:none;">
+<header class="header">
+
+    <div class="logo">
+        🌱 Study Garden
+    </div>
+
+    <div class="user">
+
+        <span
+            class="user-avatar"
+            id="avatarHeader">
+            🧑‍🌾
+        </span>
+
+        <b id="nameHeader">
+            Pelajar
+        </b>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            ⭐ <span id="xp">0</span> XP
+        </div>
+
+        <div class="stat">
+            🪙 <span id="coins">50</span>
+        </div>
+
+        <div class="stat">
+            💧 <span id="water">3</span>
+        </div>
+
+        <div class="stat">
+            ❤️ <span id="lives">3</span>
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     NAVIGASI
+================================================== -->
+
+<nav class="nav">
+
+    <button
+        class="active"
+        onclick="showPage('home',this)">
+        🏡 Kebun
+    </button>
+
+    <button
+        onclick="showPage('study',this)">
+        📚 Belajar
+    </button>
+
+    <button
+        onclick="showPage('shop',this)">
+        🛒 Toko
+    </button>
+
+    <button
+        onclick="showPage('achievement',this)">
+        🏆 Prestasi
+    </button>
+
+    <button
+        onclick="showPage('profile',this)">
+        👤 Profil
+    </button>
+
+<button
+    type="button"
+    onclick="showPage('team', this)">
+    👧🏻👧🏻🌷 Kelompok
+</button>
+</nav>
+
+
+<!-- ==================================================
+     HALAMAN KEBUN
+================================================== -->
+
+<section
+    class="page active"
+    id="home">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                🌿 Selamat Datang di Study Garden!
+            </h1>
+
+            <p>
+                Belajar → dapat XP → dapat air →
+                siram tanaman → bangun kebunmu! 🌱
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            🌻
+        </div>
+
+    </div>
+
+
+    <!-- KEBUN -->
+
+    <div class="garden">
+
+        <div class="sun">
+            ☀️
+        </div>
+
+        <div class="cloud cloud1">
+            ☁️
+        </div>
+
+        <div class="cloud cloud2">
+            ☁️
+        </div>
+
+
+        <div class="garden-title">
+            🌳 Kebun Milikmu
+        </div>
+
+        <div class="garden-subtitle">
+            Rawat tanamanmu dengan rajin belajar!
+        </div>
+
+
+        <!-- TANAMAN AKAN MASUK DI SINI -->
+
+        <div
+            class="plants"
+            id="plants">
+        </div>
+
+    </div>
+
+
+    <!-- STATISTIK -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                🌱
+            </div>
+
+            <h3>
+                Tanaman
+            </h3>
+
+            <p>
+                <b id="plantCount">
+                    0
+                </b>
+                tanaman di kebun
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📝
+            </div>
+
+            <h3>
+                Soal Dijawab
+            </h3>
+
+            <p>
+                <b id="answeredText">
+                    0 soal
+                </b>
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎯
+            </div>
+
+            <h3>
+                Jawaban Benar
+            </h3>
+
+            <p>
+                <b id="correctCount">
+                    0
+                </b>
+                jawaban
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     HALAMAN BELAJAR
+================================================== -->
+
+<section
+    class="page"
+    id="study">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                📚 Taman Belajar
+            </h1>
+
+            <p>
+                Jawab soal untuk mendapatkan
+                ⭐ XP, 🪙 koin, dan 💧 air.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            📖
+        </div>
+
+    </div>
+
+
+    <!-- PILIH MATA PELAJARAN -->
+
+    <div
+        class="study-box"
+        id="subjectBox">
+
+        <h2>
+            🌈 Pilih Mata Pelajaran
+        </h2>
+
+        <p style="
+            color:#718373;
+            margin-top:7px;
+        ">
+            Semakin rajin belajar,
+            semakin cepat kebunmu berkembang!
+        </p>
+
+
+        <div class="subjects">
+
+            <button
+                class="subject-button"
+                onclick="startQuiz('Matematika')">
+
+                <span>
+                    🔢
+                </span>
+
+                <b>
+                    Matematika
+                </b>
+
+                <small>
+                    5 soal
+                </small>
+
+            </button>
+
+
+            <button
+                class="subject-button"
+                onclick="startQuiz('IPA')">
+
+                <span>
+                    🧪
+                </span>
+
+                <b>
+                    IPA
+                </b>
+
+                <small>
+                    5 soal
+                </small>
+
+            </button>
+
+
+            <button
+                class="subject-button"
+                onclick="startQuiz('Bahasa Indonesia')">
+
+                <span>
+                    📚
+                </span>
+
+                <b>
+                    Bahasa Indonesia
+                </b>
+
+                <small>
+                    5 soal
+                </small>
+
+            </button>
+
+
+            <button
+                class="subject-button"
+                onclick="startQuiz('IPS')">
+
+                <span>
+                    🌍
+                </span>
+
+                <b>
+                    IPS
+                </b>
+
+                <small>
+                    5 soal
+                </small>
+
+            </button>
+
+
+            <button
+                class="subject-button"
+                onclick="startQuiz('PPKn')">
+
+                <span>
+                    🇮🇩
+                </span>
+
+                <b>
+                    PPKn
+                </b>
+
+                <small>
+                    5 soal
+                </small>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         QUIZ
+    ================================================== -->
+
+    <div
+        class="quiz-box"
+        id="quizBox"
+        style="display:none;">
+
+        <div class="quiz-header">
+
+            <div>
+
+                <span id="quizSubject">
+                    Matematika
+                </span>
+
+                <small>
+                    🌱 Study Challenge
+                </small>
+
+            </div>
+
+            <div>
+
+                Soal
+
+                <b id="questionNumber">
+                    1
+                </b>
+
+                /5
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="progressFill">
+            </div>
+
+        </div>
+
+
+        <!-- PERTANYAAN -->
+
+        <div class="question-card">
+
+            <div class="question-icon">
+                ❓
+            </div>
+
+            <h2 id="questionText">
+                Pertanyaan akan muncul di sini
+            </h2>
+
+        </div>
+
+
+        <!-- PILIHAN JAWABAN -->
+
+        <div
+            class="answer-box"
+            id="answerBox">
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div
+            class="feedback"
+            id="feedback">
+        </div>
+
+
+        <!-- NEXT -->
+
+        <button
+            class="next-button"
+            id="nextButton"
+            onclick="nextQuestion()"
+            style="display:none;">
+
+            Soal Berikutnya ➜
+
+        </button>
+
+
+        <!-- KEMBALI -->
+
+        <button
+            class="back-button"
+            onclick="backToSubjects()">
+
+            ← Kembali ke Mata Pelajaran
+
+        </button>
+
+    </div>
+
+</section>
+<!-- ==================================================
+     HALAMAN TOKO
+================================================== -->
+
+<section
+    class="page"
+    id="shop">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                🛒 Toko Kebun
+            </h1>
+
+            <p>
+                Gunakan koin hasil belajar untuk
+                membeli tanaman dan dekorasi.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            🛍️
+        </div>
+
+    </div>
+
+
+    <div class="shop-money">
+
+        🪙 Koin kamu:
+
+        <b id="shopCoins">
+            50
+        </b>
+
+    </div>
+
+
+    <div class="shop-grid">
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🌻
+            </div>
+
+            <h3>
+                Bunga Matahari
+            </h3>
+
+            <p>
+                Bunga cerah untuk kebun
+            </p>
+
+            <b>
+                🪙 30
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Bunga Matahari',
+                    '🌻',
+                    30
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🌷
+            </div>
+
+            <h3>
+                Tulip
+            </h3>
+
+            <p>
+                Bunga cantik untuk kebun
+            </p>
+
+            <b>
+                🪙 40
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Tulip',
+                    '🌷',
+                    40
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🌹
+            </div>
+
+            <h3>
+                Mawar
+            </h3>
+
+            <p>
+                Bunga spesial
+            </p>
+
+            <b>
+                🪙 50
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Mawar',
+                    '🌹',
+                    50
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🌸
+            </div>
+
+            <h3>
+                Sakura
+            </h3>
+
+            <p>
+                Bunga langka
+            </p>
+
+            <b>
+                🪙 80
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Sakura',
+                    '🌸',
+                    80
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🌳
+            </div>
+
+            <h3>
+                Pohon Besar
+            </h3>
+
+            <p>
+                Membuat kebun semakin hijau
+            </p>
+
+            <b>
+                🪙 100
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Pohon Besar',
+                    '🌳',
+                    100
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🪨
+            </div>
+
+            <h3>
+                Batu Taman
+            </h3>
+
+            <p>
+                Dekorasi kebun
+            </p>
+
+            <b>
+                🪙 20
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Batu Taman',
+                    '🪨',
+                    20
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                ⛲
+            </div>
+
+            <h3>
+                Air Mancur
+            </h3>
+
+            <p>
+                Dekorasi taman
+            </p>
+
+            <b>
+                🪙 90
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Air Mancur',
+                    '⛲',
+                    90
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+
+        <div class="shop-item">
+
+            <div class="shop-icon">
+                🏡
+            </div>
+
+            <h3>
+                Rumah Mini
+            </h3>
+
+            <p>
+                Rumah kecil di kebun
+            </p>
+
+            <b>
+                🪙 120
+            </b>
+
+            <button
+                onclick="
+                buyItem(
+                    'Rumah Mini',
+                    '🏡',
+                    120
+                )">
+
+                Beli
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     HALAMAN PRESTASI
+================================================== -->
+
+<section
+    class="page"
+    id="achievement">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                🏆 Prestasi
+            </h1>
+
+            <p>
+                Rajin belajar untuk membuka
+                berbagai pencapaian.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            🏆
+        </div>
+
+    </div>
+
+
+    <div class="achievement-grid">
+
+
+        <div class="achievement-card">
+
+            <div>
+                🌱
+            </div>
+
+            <h3>
+                Petani Pemula
+            </h3>
+
+            <p>
+                Jawab 1 soal
+            </p>
+
+            <b id="achievement1">
+                🔒 Belum terbuka
+            </b>
+
+        </div>
+
+
+        <div class="achievement-card">
+
+            <div>
+                🧠
+            </div>
+
+            <h3>
+                Pelajar Rajin
+            </h3>
+
+            <p>
+                Jawab 10 soal
+            </p>
+
+            <b id="achievement2">
+                🔒 Belum terbuka
+            </b>
+
+        </div>
+
+
+        <div class="achievement-card">
+
+            <div>
+                🎯
+            </div>
+
+            <h3>
+                Jawaban Tepat
+            </h3>
+
+            <p>
+                10 jawaban benar
+            </p>
+
+            <b id="achievement3">
+                🔒 Belum terbuka
+            </b>
+
+        </div>
+
+
+        <div class="achievement-card">
+
+            <div>
+                🌳
+            </div>
+
+            <h3>
+                Kebun Ramai
+            </h3>
+
+            <p>
+                Memiliki 5 tanaman
+            </p>
+
+            <b id="achievement4">
+                🔒 Belum terbuka
+            </b>
+
+        </div>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">
+                ⭐
+            </div>
+
+            <h3>
+                Level
+            </h3>
+
+            <p id="levelText">
+                Level 1
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                📝
+            </div>
+
+            <h3>
+                Soal Dijawab
+            </h3>
+
+            <p id="answeredText2">
+                0 soal
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                🎯
+            </div>
+
+            <h3>
+                Jawaban Benar
+            </h3>
+
+            <p id="correctText">
+                0 soal
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==================================================
+     HALAMAN PROFIL
+================================================== -->
+
+<section
+    class="page"
+    id="profile">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                👤 Profil Pelajar
+            </h1>
+
+            <p>
+                Atur nama dan avatar kamu.
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            👨‍🌾
+        </div>
+
+    </div>
+
+
+    <div class="profile-box">
+
+        <div
+            class="big-avatar"
+            id="bigAvatar">
+
+            🧑‍🌾
+
+        </div>
+
+
+        <h2 id="profileName">
+            Pelajar
+        </h2>
+
+
+        <p style="
+            color:#758777;
+            margin-top:7px;
+        ">
+
+            ⭐ Level
+
+            <b id="profileLevel">
+                1
+            </b>
+
+        </p>
+
+
+        <input
+            id="nameInput"
+            type="text"
+            maxlength="20"
+            placeholder="Masukkan nama kamu">
+
+
+        <h3>
+            Pilih Avatar
+        </h3>
+
+
+        <div class="avatar-list">
+
+            <button
+                onclick="chooseAvatar('🧑‍🌾')">
+                🧑‍🌾
+            </button>
+
+            <button
+                onclick="chooseAvatar('👩‍🌾')">
+                👩‍🌾
+            </button>
+
+            <button
+                onclick="chooseAvatar('🧑‍🎓')">
+                🧑‍🎓
+            </button>
+
+            <button
+                onclick="chooseAvatar('👩‍🎓')">
+                👩‍🎓
+            </button>
+
+            <button
+                onclick="chooseAvatar('🧑‍🔬')">
+                🧑‍🔬
+            </button>
+
+            <button
+                onclick="chooseAvatar('👩‍🔬')">
+                👩‍🔬
+            </button>
+
+        </div>
+
+
+        <button
+            class="save-profile"
+            onclick="saveProfile()">
+
+            💾 Simpan Profil
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ==================================================
+     HALAMAN ANGGOTA KELOMPOK
+================================================== -->
+
+<section
+    class="page"
+    id="team">
+
+    <div class="hero">
+
+        <div>
+
+            <h1>
+                👩‍🌾 Anggota Kelompok
+            </h1>
+
+            <p>
+                Kenalan dengan tim di balik
+                Study Garden! 🌱
+            </p>
+
+        </div>
+
+        <div class="hero-icon">
+            🌷
+        </div>
+
+    </div>
+
+
+    <!-- NAMA KELOMPOK -->
+
+    <div class="team-title">
+
+
+    </div>
+
+
+    <!-- ANGGOTA -->
+
+    <div class="team-grid">
+
+
+        <!-- ANGGOTA 1 -->
+
+        <div class="member-card">
+
+            <div class="member-avatar">
+                👩‍🌾
+            </div>
+
+            <div class="member-number">
+                01
+            </div>
+
+            <h2>
+                Martasya Dwi Noer Octavia
+            </h2>
+
+            <div class="member-info">
+
+                <div>
+                    📚 Kelas
+                </div>
+
+                <div>
+                    XI-8
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ANGGOTA 2 -->
+
+        <div class="member-card">
+
+            <div class="member-avatar">
+                👩‍🌾
+            </div>
+
+            <div class="member-number">
+                02
+            </div>
+
+            <h2>
+                Tsania Amelia Cahya
+            </h2>
+
+            <div class="member-info">
+
+                <div>
+                    📚 Kelas
+                </div>
+
+                <div>
+                    XI-8
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="team-footer">
+
+        🌱 <b>Study Garden</b>
+
+        <br>
+
+        <small>
+            Belajar hari ini, tumbuh menjadi
+            lebih baik esok hari. 🌷
+        </small>
+
+    </div>
+
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
