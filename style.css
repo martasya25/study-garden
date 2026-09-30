@@ -1971,3 +1971,65 @@ button:active{
 .nav .logout-button:active {
     transform: scale(0.97);
 }
+
+/* =========================
+   DETAIL MATERI
+========================= */
+
+.material-box{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    margin-top:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.material-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.material-icon{
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    background:#edf7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    flex-shrink:0;
+}
+
+.material-header h2{
+    color:#29452d;
+    margin-bottom:5px;
+}
+
+.material-header p{
+    color:#718373;
+}
+
+.material-content{
+    background:#f7fbf5;
+    border-radius:18px;
+    padding:20px;
+    line-height:1.7;
+    color:#405542;
+    margin-bottom:20px;
+}
+
+.material-content h3{
+    color:#38653e;
+    margin-bottom:8px;
+}
+
+.material-content p{
+    margin-bottom:12px;
+}
+
+#startMaterialQuizButton{
+    width:100%;
+}
