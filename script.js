@@ -2361,25 +2361,87 @@ async function loginUser() {
 
 }
 
+/* =====================================================
+   LOGOUT
+===================================================== */
+
 async function logoutUser() {
 
-    alert("Tombol Logout berhasil diklik!");
-
+    // KELUAR DARI SUPABASE
     const { error } =
         await supabaseClient.auth.signOut();
 
     if (error) {
-        console.error("Logout gagal:", error);
-        alert("Logout gagal: " + error.message);
+
+        console.error(
+            "Logout gagal:",
+            error
+        );
+
+        alert(
+            "Logout gagal: " +
+            error.message
+        );
+
         return;
     }
 
-    document.getElementById("mainApp").style.display = "none";
-    document.getElementById("authScreen").style.display = "flex";
 
-    showAuthForm("login");
+    // SEMBUNYIKAN APLIKASI
+    document.getElementById(
+        "mainApp"
+    ).style.display = "none";
 
+
+    // TAMPILKAN HALAMAN MASUK / DAFTAR
+    document.getElementById(
+        "authScreen"
+    ).style.display = "flex";
+
+
+    // TAMPILKAN FORM LOGIN
+    document.getElementById(
+        "loginForm"
+    ).style.display = "block";
+
+
+    // SEMBUNYIKAN FORM DAFTAR
+    document.getElementById(
+        "registerForm"
+    ).style.display = "none";
+
+
+    // SEMBUNYIKAN LUPA PASSWORD
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.display = "none";
+
+
+    // SEMBUNYIKAN RESET PASSWORD
+    document.getElementById(
+        "resetPasswordScreen"
+    ).style.display = "none";
+
+
+    // RESET TAB
+    document.getElementById(
+        "loginTab"
+    ).classList.add("active");
+
+    document.getElementById(
+        "registerTab"
+    ).classList.remove("active");
+
+
+    // HAPUS PESAN LOGIN
+    document.getElementById(
+        "authMessage"
+    ).textContent = "";
+
+
+    // KEMBALI KE ATAS
     window.scrollTo(0, 0);
+
 }
 
 
