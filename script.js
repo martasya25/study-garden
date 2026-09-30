@@ -1782,7 +1782,61 @@ ${plant.growth >= 100 ? `
 
 }
 
+/* =====================================================
+   UPDATE PERTUMBUHAN TANAMAN KE DATABASE
+===================================================== */
 
+async function updatePlantInDatabase(plant) {
+
+    if (!game.id_pengguna) {
+
+        console.error(
+            "ID pengguna tidak ditemukan."
+        );
+
+        return;
+    }
+
+    if (!plant.id_tanaman) {
+
+        console.error(
+            "ID tanaman tidak ditemukan."
+        );
+
+        return;
+    }
+
+    const { error } =
+        await supabaseClient
+            .from("kebun_pengguna")
+            .update({
+                persentase_pertumbuhan:
+                    plant.growth
+            })
+            .eq(
+                "id_pengguna",
+                game.id_pengguna
+            )
+            .eq(
+                "id_tanaman",
+                plant.id_tanaman
+            );
+
+    if (error) {
+
+        console.error(
+            "Gagal update pertumbuhan tanaman:",
+            error
+        );
+
+        return;
+    }
+
+    console.log(
+        "Pertumbuhan tanaman berhasil disimpan:",
+        plant.growth + "%"
+    );
+}
 /* =====================================================
    PANEN TANAMAN
 ===================================================== */
