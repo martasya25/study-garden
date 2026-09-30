@@ -2134,25 +2134,29 @@ async function loginUser() {
     /* -------------------------------------------------
        CEK EMAIL DI DATA PENGGUNA
     ------------------------------------------------- */
+const {
+    data: profile,
+    error: profileError
+} = await supabaseClient
+    .from("data_pengguna")
+    .select("email")
+    .eq("email", email)
+    .maybeSingle();
 
-    const {
-        data: profile,
-        error: profileError
-    } = await supabaseClient
-        .from("data_pengguna")
-        .select("email")
-        .eq("email", email)
-        .maybeSingle();
+if (profileError) {
+    console.error("Profile check error:", profileError);
 
+    authMessage.textContent =
+        "Gagal mengecek data pengguna: " + profileError.message;
 
-    // JIKA EMAIL TIDAK ADA
-    if (!profile) {
+    return;
+}
 
-        authMessage.textContent =
-            "Email yang digunakan belum terdaftar.";
-
-        return;
-    }
+if (!profile) {
+    authMessage.textContent =
+        "Email yang digunakan belum terdaftar.";
+    return;
+}
 
 
     /* -------------------------------------------------
