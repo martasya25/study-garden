@@ -1400,6 +1400,7 @@ function finishQuiz() {
 }
 
 
+
 /* =====================================================
    KEMBALI KE PILIHAN MAPEL
 ===================================================== */
@@ -2932,6 +2933,61 @@ function showMaterials(subject) {
         materialList.appendChild(button);
 
     });
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   BUKA ISI MATERI
+===================================================== */
+
+function openMaterial(materialId, subject) {
+
+    const materialBox =
+        document.getElementById("materialBox");
+
+    const contentBox =
+        document.getElementById("materialContentBox");
+
+    const contentTitle =
+        document.getElementById("materialContentTitle");
+
+    const content =
+        document.getElementById("materialContent");
+
+    if (
+        !materialBox ||
+        !contentBox ||
+        !contentTitle ||
+        !content
+    ) {
+        console.error(
+            "Elemen isi materi tidak ditemukan."
+        );
+
+        return;
+    }
+
+    materialBox.style.display = "none";
+
+    contentBox.style.display = "block";
+
+    contentTitle.textContent =
+        "📖 " + subject;
+
+    content.innerHTML = `
+        <h3>📚 ${materialId}</h3>
+
+        <p>
+            Isi materi akan ditambahkan di sini.
+        </p>
+
+        <p>
+            Pelajari materi dengan baik sebelum
+            mengerjakan kuis! 🌱
+        </p>
+    `;
 
     window.scrollTo(0, 0);
 }
