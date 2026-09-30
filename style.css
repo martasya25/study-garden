@@ -684,7 +684,18 @@ button:active{
 #mainApp {
     display: none;
 }
+.forgot-password {
+    display: block;
+    margin-top: 8px;
+    color: #4285f4;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
 
+.forgot-password:hover {
+    text-decoration: underline;
+}
 
 @media (max-width: 480px) {
 
