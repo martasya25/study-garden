@@ -3374,12 +3374,13 @@ async function startMaterialQuiz(materialId, subject) {
         }
 
         // Cari materi di database
-        const { data: materiData, error: materiError } =
-            await supabaseClient
-                .from("data_materi")
-                .select("id_materi, nama_materi")
-                .eq("nama_materi", material.title)
-                .single();
+const { data: materiData, error: materiError } =
+    await supabaseClient
+        .from("data_materi")
+        .select("id_materi, nama_materi")
+        .eq("nama_materi", material.title)
+        .limit(1)
+        .maybeSingle();
 
         if (materiError) {
             console.error(
