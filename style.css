@@ -2097,3 +2097,43 @@ button:active{
         min-height: 125px;
     }
 }
+/* =====================================================
+   TOMBOL MULAI KUIS
+===================================================== */
+
+.start-quiz-button {
+    width: 100%;
+    padding: 15px 20px;
+
+    border: none;
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #72b86a,
+        #4f9d58
+    );
+
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 12px rgba(79, 157, 88, 0.25);
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.start-quiz-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 16px rgba(79, 157, 88, 0.3);
+}
+
+.start-quiz-button:active {
+    transform: scale(0.97);
+    box-shadow:
+        0 3px 8px rgba(79, 157, 88, 0.2);
+}
