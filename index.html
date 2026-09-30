@@ -198,6 +198,65 @@
 
 </div>
 
+<!-- FORM PASSWORD BARU -->
+<div id="resetPasswordScreen" style="display:none;">
+
+    <h2>🔐 Buat Password Baru</h2>
+
+    <p>
+        Masukkan password baru untuk akun Study Garden kamu.
+    </p>
+
+    <label>Password Baru</label>
+
+    <div class="password-wrapper">
+        <input
+            type="password"
+            id="newPassword"
+            placeholder="Minimal 6 karakter"
+            minlength="6"
+        >
+
+        <button
+            type="button"
+            class="show-password"
+            onclick="togglePassword('newPassword', this)">
+            👁️
+        </button>
+    </div>
+
+    <label>Ulangi Password Baru</label>
+
+    <div class="password-wrapper">
+        <input
+            type="password"
+            id="confirmNewPassword"
+            placeholder="Ulangi password baru"
+            minlength="6"
+        >
+
+        <button
+            type="button"
+            class="show-password"
+            onclick="togglePassword('confirmNewPassword', this)">
+            👁️
+        </button>
+    </div>
+
+    <button
+        type="button"
+        class="auth-submit"
+        id="updatePasswordButton">
+        🔒 Simpan Password Baru
+    </button>
+
+    <p
+        id="resetPasswordMessage"
+        class="auth-message">
+    </p>
+
+</div>
+
     </div>
 
 </div>
