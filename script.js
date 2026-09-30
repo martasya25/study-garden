@@ -3429,19 +3429,20 @@ const { data: materiData, error: materiError } =
         );
 
         // Simpan soal untuk kuis
-       selectedQuestions = soalData.map(function(soal) {
+selectedQuestions = soalData.map(function(soal) {
 
     return {
         question: soal.pertanyaan,
 
-        options: {
-            A: soal.pilihan_a,
-            B: soal.pilihan_b,
-            C: soal.pilihan_c,
-            D: soal.pilihan_d
-        },
+        answers: [
+            soal.pilihan_a,
+            soal.pilihan_b,
+            soal.pilihan_c,
+            soal.pilihan_d
+        ],
 
-        answer: soal.jawaban_benar
+        answer:
+            soal.jawaban_benar
     };
 
 });
