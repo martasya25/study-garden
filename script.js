@@ -2872,16 +2872,26 @@ function showMaterials(subject) {
         subjectMaterials[subject];
 
     if (!subjectBox || !materialBox || !materialList) {
-        console.error("Elemen materi tidak ditemukan.");
+
+        console.error(
+            "Elemen materi tidak ditemukan."
+        );
+
         return;
     }
 
     if (!materials) {
-        console.error("Mata pelajaran tidak ditemukan:", subject);
+
+        console.error(
+            "Mata pelajaran tidak ditemukan:",
+            subject
+        );
+
         return;
     }
 
     subjectBox.style.display = "none";
+
     materialBox.style.display = "block";
 
     materialSubjectTitle.textContent =
@@ -2895,7 +2905,9 @@ function showMaterials(subject) {
             document.createElement("button");
 
         button.type = "button";
-        button.className = "subject-button";
+
+        button.className =
+            "subject-button";
 
         button.innerHTML = `
             <span>${material.icon}</span>
@@ -2905,14 +2917,17 @@ function showMaterials(subject) {
             <small>${subject}</small>
         `;
 
-        button.addEventListener("click", function() {
+        button.addEventListener(
+            "click",
+            function() {
 
-            openMaterial(
-                material.id,
-                subject
-            );
+                openMaterial(
+                    material.id,
+                    subject
+                );
 
-        });
+            }
+        );
 
         materialList.appendChild(button);
 
@@ -2920,3 +2935,35 @@ function showMaterials(subject) {
 
     window.scrollTo(0, 0);
 }
+
+
+/* =====================================================
+   KEMBALI KE MATA PELAJARAN
+===================================================== */
+
+function backToSubjects() {
+
+    document.getElementById(
+        "materialBox"
+    ).style.display = "none";
+
+    document.getElementById(
+        "subjectBox"
+    ).style.display = "block";
+
+    window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   CEK JAVASCRIPT
+===================================================== */
+
+console.log(
+    "SCRIPT STUDY GARDEN BERHASIL DIBACA"
+);
+
+console.log(
+    "showMaterials:",
+    typeof showMaterials
+);
