@@ -1905,10 +1905,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadGame();
 
-    // ==========================================
-    // DETEKSI RESET PASSWORD DARI EMAIL
-    // ==========================================
-
+    // DETEKSI RESET PASSWORD
     supabaseClient.auth.onAuthStateChange(function(event) {
 
         if (event === "PASSWORD_RECOVERY") {
@@ -1917,142 +1914,89 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
-
-    // ==========================================
     // TOMBOL SIMPAN PASSWORD BARU
-    // ==========================================
-
     const updatePasswordButton =
         document.getElementById("updatePasswordButton");
 
     if (updatePasswordButton) {
-
         updatePasswordButton.addEventListener(
             "click",
             function() {
-
                 updateNewPassword();
-
             }
         );
-
     }
 
-
-    // ==========================================
     // FORM DAFTAR
-    // ==========================================
-
     const registerForm =
         document.getElementById("registerForm");
 
     if (registerForm) {
-
         registerForm.addEventListener(
             "submit",
             function(event) {
-
                 event.preventDefault();
-
                 registerUser();
-
             }
         );
-
     }
 
-
-    // ==========================================
     // FORM LOGIN
-    // ==========================================
-
     const loginForm =
         document.getElementById("loginForm");
 
     if (loginForm) {
-
         loginForm.addEventListener(
             "submit",
             function(event) {
-
                 event.preventDefault();
-
                 loginUser();
-
             }
         );
-
     }
 
-
-    // ==========================================
     // LUPA PASSWORD
-    // ==========================================
-
     const forgotPasswordLink =
         document.getElementById("forgotPasswordLink");
 
     if (forgotPasswordLink) {
-
         forgotPasswordLink.addEventListener(
             "click",
             function(event) {
-
                 event.preventDefault();
-
                 showForgotPassword();
-
             }
         );
-
     }
 
-
-    // ==========================================
     // KIRIM LINK RESET
-    // ==========================================
-
     const sendResetButton =
         document.getElementById("sendResetButton");
 
     if (sendResetButton) {
-
         sendResetButton.addEventListener(
             "click",
             function() {
-
                 sendResetPassword();
-
             }
         );
-
     }
 
-
-    // ==========================================
     // KEMBALI KE LOGIN
-    // ==========================================
-
     const backToLoginButton =
         document.getElementById("backToLoginButton");
 
     if (backToLoginButton) {
-
         backToLoginButton.addEventListener(
             "click",
             function(event) {
-
                 event.preventDefault();
-
                 backToLogin();
-
             }
         );
-
     }
 
 });
-
 /* =====================================================
    PILIH LOGIN / DAFTAR
 ===================================================== */
