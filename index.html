@@ -521,124 +521,260 @@
 
     <!-- PILIH MATA PELAJARAN -->
 
-    <div
-        class="study-box"
-        id="subjectBox">
+<div
+    class="study-box"
+    id="subjectBox">
 
-        <h2>
-            🌈 Pilih Mata Pelajaran
-        </h2>
+    <h2>
+        📚 Pilih Materi
+    </h2>
 
-        <p style="
-            color:#718373;
-            margin-top:7px;
-        ">
-            Semakin rajin belajar,
-            semakin cepat kebunmu berkembang!
-        </p>
-
-
-        <div class="subjects">
-
-            <button
-                class="subject-button"
-                onclick="startQuiz('Matematika')">
-
-                <span>
-                    🔢
-                </span>
-
-                <b>
-                    Matematika
-                </b>
-
-                <small>
-                    5 soal
-                </small>
-
-            </button>
+    <p style="
+        color:#718373;
+        margin-top:7px;
+    ">
+        Pilih materi yang ingin kamu pelajari! 🌱
+    </p>
 
 
-            <button
-                class="subject-button"
-                onclick="startQuiz('IPA')">
+    <div class="subjects">
 
-                <span>
-                    🧪
-                </span>
+        <button
+            class="subject-button"
+            onclick="openMaterial('persamaan-linear')">
 
-                <b>
-                    IPA
-                </b>
+            <span>🔢</span>
 
-                <small>
-                    5 soal
-                </small>
+            <b>
+                Persamaan Linear
+            </b>
 
-            </button>
+            <small>
+                Matematika
+            </small>
 
-
-            <button
-                class="subject-button"
-                onclick="startQuiz('Bahasa Indonesia')">
-
-                <span>
-                    📚
-                </span>
-
-                <b>
-                    Bahasa Indonesia
-                </b>
-
-                <small>
-                    5 soal
-                </small>
-
-            </button>
+        </button>
 
 
-            <button
-                class="subject-button"
-                onclick="startQuiz('IPS')">
+        <button
+            class="subject-button"
+            onclick="openMaterial('fungsi')">
 
-                <span>
-                    🌍
-                </span>
+            <span>📈</span>
 
-                <b>
-                    IPS
-                </b>
+            <b>
+                Fungsi
+            </b>
 
-                <small>
-                    5 soal
-                </small>
+            <small>
+                Matematika
+            </small>
 
-            </button>
+        </button>
 
 
-            <button
-                class="subject-button"
-                onclick="startQuiz('PPKn')">
+        <button
+            class="subject-button"
+            onclick="openMaterial('teks-eksplanasi')">
 
-                <span>
-                    🇮🇩
-                </span>
+            <span>📖</span>
 
-                <b>
-                    PPKn
-                </b>
+            <b>
+                Teks Eksplanasi
+            </b>
 
-                <small>
-                    5 soal
-                </small>
+            <small>
+                Bahasa Indonesia
+            </small>
 
-            </button>
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('teks-argumentasi')">
+
+            <span>✍️</span>
+
+            <b>
+                Teks Argumentasi
+            </b>
+
+            <small>
+                Bahasa Indonesia
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('procedure-text')">
+
+            <span>🇬🇧</span>
+
+            <b>
+                Procedure Text
+            </b>
+
+            <small>
+                Bahasa Inggris
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('narrative-text')">
+
+            <span>📚</span>
+
+            <b>
+                Narrative Text
+            </b>
+
+            <small>
+                Bahasa Inggris
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('ekosistem')">
+
+            <span>🌳</span>
+
+            <b>
+                Ekosistem
+            </b>
+
+            <small>
+                IPA
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('sistem-pernapasan')">
+
+            <span>🫁</span>
+
+            <b>
+                Sistem Pernapasan
+            </b>
+
+            <small>
+                IPA
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('interaksi-sosial')">
+
+            <span>👥</span>
+
+            <b>
+                Interaksi Sosial
+            </b>
+
+            <small>
+                IPS
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="openMaterial('perubahan-sosial')">
+
+            <span>🌍</span>
+
+            <b>
+                Perubahan Sosial
+            </b>
+
+            <small>
+                IPS
+            </small>
+
+        </button>
+
+    </div>
+
+</div>
+
+    <!-- ==================================================
+     DETAIL MATERI
+================================================== -->
+
+<div
+    class="material-box"
+    id="materialBox"
+    style="display:none;">
+
+    <button
+        class="back-button"
+        onclick="backToMaterials()">
+
+        ← Kembali ke Materi
+
+    </button>
+
+
+    <div class="material-header">
+
+        <div
+            class="material-icon"
+            id="materialIcon">
+            📚
+        </div>
+
+        <div>
+
+            <h2 id="materialTitle">
+                Judul Materi
+            </h2>
+
+            <p id="materialCategory">
+                Mata Pelajaran
+            </p>
 
         </div>
 
     </div>
 
 
+    <div
+        class="material-content"
+        id="materialContent">
+
+        <p>
+            Isi materi akan muncul di sini.
+        </p>
+
+    </div>
+
+
+    <button
+        class="auth-submit"
+        id="startMaterialQuizButton"
+        onclick="startMaterialQuiz()">
+
+        🌱 Mulai Kuis
+
+    </button>
+
+</div>
+    
     <!-- ==================================================
          QUIZ
     ================================================== -->
