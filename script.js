@@ -1402,25 +1402,43 @@ function finishQuiz() {
 
 
 /* =====================================================
-   KEMBALI KE PILIHAN MAPEL
+   KEMBALI KE PILIHAN MATA PELAJARAN
 ===================================================== */
 
 function backToSubjects() {
 
-    document.getElementById(
-        "quizBox"
-    ).style.display = "none";
+    const subjectBox =
+        document.getElementById("subjectBox");
 
+    const materialBox =
+        document.getElementById("materialBox");
 
-    document.getElementById(
-        "subjectBox"
-    ).style.display = "block";
+    const materialContentBox =
+        document.getElementById("materialContentBox");
 
+    const quizBox =
+        document.getElementById("quizBox");
+
+    if (subjectBox) {
+        subjectBox.style.display = "block";
+    }
+
+    if (materialBox) {
+        materialBox.style.display = "none";
+    }
+
+    if (materialContentBox) {
+        materialContentBox.style.display = "none";
+    }
+
+    if (quizBox) {
+        quizBox.style.display = "none";
+    }
 
     answerLocked = false;
 
+    window.scrollTo(0, 0);
 }
-
 
 /* =====================================================
    RENDER TANAMAN
