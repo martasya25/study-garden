@@ -1052,6 +1052,17 @@ function showQuestion() {
         selectedQuestions[currentQuestion];
 
 
+    if (!q) {
+
+        console.error(
+            "Soal tidak ditemukan:",
+            currentQuestion
+        );
+
+        return;
+    }
+
+
     document.getElementById(
         "questionNumber"
     ).textContent =
@@ -1077,39 +1088,85 @@ function showQuestion() {
 
 
     const answerBox =
-        document.getElementById("answerBox");
+        document.getElementById(
+            "answerBox"
+        );
 
 
     answerBox.innerHTML = "";
 
 
     const feedback =
-        document.getElementById("feedback");
+        document.getElementById(
+            "feedback"
+        );
 
 
-    feedback.style.display = "none";
+    feedback.style.display =
+        "none";
 
-    feedback.innerHTML = "";
+
+    feedback.innerHTML =
+        "";
 
 
     const next =
-        document.getElementById("nextButton");
+        document.getElementById(
+            "nextButton"
+        );
 
 
-    next.style.display = "none";
+    next.style.display =
+        "none";
 
 
-    q.answers.forEach(
+    /* ==========================================
+       AMBIL PILIHAN JAWABAN
+    ========================================== */
+
+    const answers =
+        q.answers || [
+            q.pilihan_a,
+            q.pilihan_b,
+            q.pilihan_c,
+            q.pilihan_d
+        ];
+
+
+    if (
+        !answers ||
+        answers.length === 0
+    ) {
+
+        console.error(
+            "Pilihan jawaban tidak ditemukan:",
+            q
+        );
+
+        return;
+    }
+
+
+    /* ==========================================
+       TAMPILKAN PILIHAN
+    ========================================== */
+
+    answers.forEach(
         function(answer, index) {
 
             const button =
-                document.createElement("button");
+                document.createElement(
+                    "button"
+                );
 
 
-            button.type = "button";
+            button.type =
+                "button";
+
 
             button.className =
                 "answer-button";
+
 
             button.textContent =
                 answer;
@@ -1125,13 +1182,14 @@ function showQuestion() {
             );
 
 
-            answerBox.appendChild(button);
+            answerBox.appendChild(
+                button
+            );
 
         }
     );
 
 }
-
 
 /* =====================================================
    CEK JAWABAN
@@ -3385,18 +3443,9 @@ async function startMaterialQuiz(materialId, subject) {
             data: materiData,
             error: materiError
         } = await supabaseClient
-
             .from("data_materi")
-
-            .select(
-                "id_materi, nama_materi"
-            )
-
-            .eq(
-                "nama_materi",
-                material.title
-            )
-
+            .select("id_materi, nama_materi")
+            .eq("nama_materi", material.title)
             .limit(1);
 
 
@@ -3444,16 +3493,14 @@ async function startMaterialQuiz(materialId, subject) {
 
 
         /* ==========================================
-           2. AMBIL SOAL BERDASARKAN ID MATERI
+           2. AMBIL SOAL DARI DATABASE
         ========================================== */
 
         const {
             data: soalData,
             error: soalError
         } = await supabaseClient
-
             .from("data_soal_kuis")
-
             .select(`
                 id_soal,
                 pertanyaan,
@@ -3464,7 +3511,6 @@ async function startMaterialQuiz(materialId, subject) {
                 jawaban_benar,
                 tingkat_kesulitan
             `)
-
             .eq(
                 "id_materi",
                 materi.id_materi
@@ -3506,12 +3552,49 @@ async function startMaterialQuiz(materialId, subject) {
 
 
         /* ==========================================
-           3. UBAH FORMAT DATABASE
-              SESUAI FORMAT KUIS LAMA
+           3. UBAH FORMAT SOAL DATABASE
+              KE FORMAT KUIS
         ========================================== */
 
         selectedQuestions =
             soalData.map(function(soal) {
+
+                let correctIndex;
+
+
+                if (
+                    soal.jawaban_benar === "A"
+                ) {
+
+                    correctIndex = 0;
+
+                } else if (
+                    soal.jawaban_benar === "B"
+                ) {
+
+                    correctIndex = 1;
+
+                } else if (
+                    soal.jawaban_benar === "C"
+                ) {
+
+                    correctIndex = 2;
+
+                } else if (
+                    soal.jawaban_benar === "D"
+                ) {
+
+                    correctIndex = 3;
+
+                } else {
+
+                    correctIndex =
+                        Number(
+                            soal.jawaban_benar
+                        );
+
+                }
+
 
                 return {
 
@@ -3530,8 +3613,8 @@ async function startMaterialQuiz(materialId, subject) {
 
                     ],
 
-                    answer:
-                        soal.jawaban_benar
+                    correct:
+                        correctIndex
 
                 };
 
@@ -3539,8 +3622,22 @@ async function startMaterialQuiz(materialId, subject) {
 
 
         /* ==========================================
-           4. CEK DATA SOAL
+           4. ACAK SOAL
         ========================================== */
+
+        selectedQuestions =
+            selectedQuestions.sort(
+                () => Math.random() - 0.5
+            );
+
+
+        /* ==========================================
+           5. BATASI 5 SOAL
+        ========================================== */
+
+        selectedQuestions =
+            selectedQuestions.slice(0, 5);
+
 
         console.log(
             "Selected questions:",
@@ -3548,14 +3645,24 @@ async function startMaterialQuiz(materialId, subject) {
         );
 
 
-        console.log(
-            "Soal pertama:",
-            selectedQuestions[0]
-        );
+        /* ==========================================
+           6. CEK SOAL
+        ========================================== */
+
+        if (
+            selectedQuestions.length === 0
+        ) {
+
+            alert(
+                "Soal untuk materi ini belum tersedia."
+            );
+
+            return;
+        }
 
 
         /* ==========================================
-           5. SIAPKAN KUIS
+           7. SIAPKAN KUIS
         ========================================== */
 
         currentSubject =
@@ -3569,7 +3676,7 @@ async function startMaterialQuiz(materialId, subject) {
 
 
         /* ==========================================
-           6. PINDAH KE HALAMAN KUIS
+           8. PINDAH KE HALAMAN KUIS
         ========================================== */
 
         const materialContentBox =
@@ -3580,6 +3687,11 @@ async function startMaterialQuiz(materialId, subject) {
         const quizBox =
             document.getElementById(
                 "quizBox"
+            );
+
+        const quizSubject =
+            document.getElementById(
+                "quizSubject"
             );
 
 
@@ -3599,8 +3711,16 @@ async function startMaterialQuiz(materialId, subject) {
         }
 
 
+        if (quizSubject) {
+
+            quizSubject.textContent =
+                material.title;
+
+        }
+
+
         /* ==========================================
-           7. TAMPILKAN SOAL PERTAMA
+           9. TAMPILKAN SOAL PERTAMA
         ========================================== */
 
         showQuestion();
