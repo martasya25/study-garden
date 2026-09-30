@@ -3364,106 +3364,253 @@ async function startMaterialQuiz(materialId, subject) {
 
     try {
 
-        // Cari nama materi dari data yang sudah ada
+        /* ==========================================
+           1. CARI DATA MATERI
+        ========================================== */
+
         const material =
             materialContents[materialId];
 
         if (!material) {
-            alert("Materi tidak ditemukan.");
+
+            alert(
+                "Materi tidak ditemukan."
+            );
+
             return;
         }
 
-        // Cari materi di database
-const { data: materiData, error: materiError } =
-    await supabaseClient
-        .from("data_materi")
-        .select("id_materi, nama_materi")
-        .eq("nama_materi", material.title)
-        .limit(1)
-        .maybeSingle();
+
+        const {
+            data: materiData,
+            error: materiError
+        } = await supabaseClient
+
+            .from("data_materi")
+
+            .select(
+                "id_materi, nama_materi"
+            )
+
+            .eq(
+                "nama_materi",
+                material.title
+            )
+
+            .limit(1);
+
 
         if (materiError) {
+
             console.error(
                 "Gagal mengambil data materi:",
                 materiError
             );
 
-            alert("Data materi belum tersedia di database.");
+            alert(
+                "Data materi belum bisa diambil dari database."
+            );
+
             return;
         }
 
-        // Ambil soal berdasarkan id materi
-        const { data: soalData, error: soalError } =
-            await supabaseClient
-                .from("data_soal_kuis")
-                .select(`
-                    id_soal,
-                    pertanyaan,
-                    pilihan_a,
-                    pilihan_b,
-                    pilihan_c,
-                    pilihan_d,
-                    jawaban_benar,
-                    tingkat_kesulitan
-                `)
-                .eq("id_materi", materiData.id_materi);
+
+        if (
+            !materiData ||
+            materiData.length === 0
+        ) {
+
+            console.error(
+                "Materi tidak ditemukan:",
+                material.title
+            );
+
+            alert(
+                "Data materi belum tersedia di database."
+            );
+
+            return;
+        }
+
+
+        const materi =
+            materiData[0];
+
+
+        console.log(
+            "Materi ditemukan:",
+            materi
+        );
+
+
+        /* ==========================================
+           2. AMBIL SOAL BERDASARKAN ID MATERI
+        ========================================== */
+
+        const {
+            data: soalData,
+            error: soalError
+        } = await supabaseClient
+
+            .from("data_soal_kuis")
+
+            .select(`
+                id_soal,
+                pertanyaan,
+                pilihan_a,
+                pilihan_b,
+                pilihan_c,
+                pilihan_d,
+                jawaban_benar,
+                tingkat_kesulitan
+            `)
+
+            .eq(
+                "id_materi",
+                materi.id_materi
+            );
+
 
         if (soalError) {
+
             console.error(
                 "Gagal mengambil soal:",
                 soalError
             );
 
-            alert("Soal belum bisa diambil dari database.");
+            alert(
+                "Soal belum bisa diambil dari database."
+            );
+
             return;
         }
 
-        if (!soalData || soalData.length === 0) {
-            alert("Belum ada soal untuk materi ini.");
+
+        if (
+            !soalData ||
+            soalData.length === 0
+        ) {
+
+            alert(
+                "Belum ada soal untuk materi ini."
+            );
+
             return;
         }
+
 
         console.log(
             "Soal dari database:",
             soalData
         );
 
-        // Simpan soal untuk kuis
-selectedQuestions = soalData.map(function(soal) {
 
-    return {
-        question: soal.pertanyaan,
+        /* ==========================================
+           3. UBAH FORMAT DATABASE
+              SESUAI FORMAT KUIS LAMA
+        ========================================== */
 
-        answers: [
-            soal.pilihan_a,
-            soal.pilihan_b,
-            soal.pilihan_c,
-            soal.pilihan_d
-        ],
+        selectedQuestions =
+            soalData.map(function(soal) {
 
-        answer:
-            soal.jawaban_benar
-    };
+                return {
 
-});
+                    question:
+                        soal.pertanyaan,
+
+                    answers: [
+
+                        soal.pilihan_a,
+
+                        soal.pilihan_b,
+
+                        soal.pilihan_c,
+
+                        soal.pilihan_d
+
+                    ],
+
+                    answer:
+                        soal.jawaban_benar
+
+                };
+
+            });
 
 
-        currentSubject = subject;
-        currentQuestion = 0;
-        answerLocked = false;
+        /* ==========================================
+           4. CEK DATA SOAL
+        ========================================== */
 
-        // Tampilkan halaman kuis
-        document.getElementById(
-            "materialContentBox"
-        ).style.display = "none";
+        console.log(
+            "Selected questions:",
+            selectedQuestions
+        );
 
-        document.getElementById(
-            "quizBox"
-        ).style.display = "block";
+
+        console.log(
+            "Soal pertama:",
+            selectedQuestions[0]
+        );
+
+
+        /* ==========================================
+           5. SIAPKAN KUIS
+        ========================================== */
+
+        currentSubject =
+            subject;
+
+        currentQuestion =
+            0;
+
+        answerLocked =
+            false;
+
+
+        /* ==========================================
+           6. PINDAH KE HALAMAN KUIS
+        ========================================== */
+
+        const materialContentBox =
+            document.getElementById(
+                "materialContentBox"
+            );
+
+        const quizBox =
+            document.getElementById(
+                "quizBox"
+            );
+
+
+        if (materialContentBox) {
+
+            materialContentBox.style.display =
+                "none";
+
+        }
+
+
+        if (quizBox) {
+
+            quizBox.style.display =
+                "block";
+
+        }
+
+
+        /* ==========================================
+           7. TAMPILKAN SOAL PERTAMA
+        ========================================== */
 
         showQuestion();
 
-        window.scrollTo(0, 0);
+
+        window.scrollTo(
+            0,
+            0
+        );
+
 
     } catch (error) {
 
@@ -3475,9 +3622,10 @@ selectedQuestions = soalData.map(function(soal) {
         alert(
             "Terjadi kesalahan saat membuka kuis."
         );
-    }
-}
 
+    }
+
+}
 /* =====================================================
    KEMBALI DARI KUIS KE MATA PELAJARAN
 ===================================================== */
