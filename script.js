@@ -2939,8 +2939,334 @@ function showMaterials(subject) {
 
 
 /* =====================================================
+   ISI MATERI
+===================================================== */
+
+const materialContents = {
+
+    "persamaan-linear": {
+        title: "Persamaan Linear",
+        icon: "🔢",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Persamaan linear adalah persamaan matematika
+                yang memiliki variabel dengan pangkat tertinggi satu.
+            </p>
+
+            <h3>📌 Bentuk Umum</h3>
+            <p>
+                Bentuk umum persamaan linear satu variabel adalah:
+            </p>
+
+            <p><b>ax + b = 0</b></p>
+
+            <h3>✏️ Contoh</h3>
+            <p>
+                2x + 6 = 12
+            </p>
+            <p>
+                2x = 6<br>
+                x = 3
+            </p>
+
+            <h3>💡 Kesimpulan</h3>
+            <p>
+                Nilai variabel dapat ditemukan dengan melakukan
+                operasi matematika yang sama pada kedua ruas.
+            </p>
+        `
+    },
+
+    "fungsi": {
+        title: "Fungsi",
+        icon: "📈",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Fungsi adalah hubungan antara dua himpunan yang
+                memasangkan setiap anggota domain dengan tepat satu
+                anggota kodomain.
+            </p>
+
+            <h3>📌 Bentuk Fungsi</h3>
+            <p>
+                Fungsi biasanya ditulis sebagai:
+            </p>
+
+            <p><b>f(x) = ax + b</b></p>
+
+            <h3>✏️ Contoh</h3>
+            <p>
+                Jika f(x) = 2x + 3, maka:
+            </p>
+            <p>
+                f(2) = 2(2) + 3 = 7
+            </p>
+
+            <h3>💡 Kesimpulan</h3>
+            <p>
+                Fungsi digunakan untuk menunjukkan hubungan antara
+                suatu nilai masukan dengan nilai keluaran.
+            </p>
+        `
+    },
+
+    "ekosistem": {
+        title: "Ekosistem",
+        icon: "🌳",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Ekosistem adalah hubungan timbal balik antara makhluk
+                hidup dengan lingkungan di sekitarnya.
+            </p>
+
+            <h3>🌱 Komponen Ekosistem</h3>
+            <p>
+                Komponen biotik adalah makhluk hidup seperti manusia,
+                hewan, tumbuhan, dan mikroorganisme.
+            </p>
+
+            <p>
+                Komponen abiotik adalah benda tidak hidup seperti air,
+                tanah, udara, cahaya matahari, dan suhu.
+            </p>
+
+            <h3>🔗 Rantai Makanan</h3>
+            <p>
+                Rantai makanan menunjukkan proses perpindahan energi
+                melalui kegiatan makan dan dimakan.
+            </p>
+
+            <p>
+                Contoh: <b>Rumput → Belalang → Katak → Ular</b>
+            </p>
+        `
+    },
+
+    "sistem-pernapasan": {
+        title: "Sistem Pernapasan",
+        icon: "🫁",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Sistem pernapasan adalah sistem organ yang digunakan
+                tubuh untuk mengambil oksigen dan mengeluarkan karbon
+                dioksida.
+            </p>
+
+            <h3>🫁 Organ Pernapasan</h3>
+            <p>
+                Organ pernapasan manusia meliputi hidung, faring,
+                laring, trakea, bronkus, bronkiolus, dan paru-paru.
+            </p>
+
+            <h3>💨 Proses Pernapasan</h3>
+            <p>
+                Udara masuk melalui hidung kemudian menuju saluran
+                pernapasan hingga sampai ke paru-paru.
+            </p>
+
+            <h3>💡 Kesimpulan</h3>
+            <p>
+                Oksigen dibutuhkan tubuh untuk membantu menghasilkan
+                energi, sedangkan karbon dioksida dikeluarkan sebagai
+                hasil sisa metabolisme.
+            </p>
+        `
+    },
+
+    "teks-eksplanasi": {
+        title: "Teks Eksplanasi",
+        icon: "📖",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Teks eksplanasi adalah teks yang menjelaskan proses
+                terjadinya suatu fenomena alam, sosial, atau budaya.
+            </p>
+
+            <h3>📌 Struktur</h3>
+            <p>
+                Struktur teks eksplanasi terdiri dari:
+            </p>
+
+            <p>
+                1. Pernyataan umum<br>
+                2. Deretan penjelas<br>
+                3. Interpretasi atau penutup
+            </p>
+
+            <h3>✏️ Ciri-ciri</h3>
+            <p>
+                Teks eksplanasi berisi fakta dan menjelaskan hubungan
+                sebab-akibat atau proses terjadinya suatu fenomena.
+            </p>
+        `
+    },
+
+    "teks-argumentasi": {
+        title: "Teks Argumentasi",
+        icon: "✍️",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Teks argumentasi adalah teks yang berisi pendapat
+                penulis yang disertai alasan dan bukti untuk
+                meyakinkan pembaca.
+            </p>
+
+            <h3>📌 Struktur</h3>
+            <p>
+                Struktur teks argumentasi dapat terdiri dari:
+            </p>
+
+            <p>
+                1. Pendapat atau pernyataan<br>
+                2. Alasan dan bukti<br>
+                3. Kesimpulan
+            </p>
+
+            <h3>💡 Ciri-ciri</h3>
+            <p>
+                Teks argumentasi menggunakan alasan yang logis serta
+                dapat didukung oleh fakta dan data.
+            </p>
+        `
+    },
+
+    "procedure-text": {
+        title: "Procedure Text",
+        icon: "🇬🇧",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Procedure text adalah teks yang menjelaskan langkah-
+                langkah untuk melakukan atau membuat sesuatu.
+            </p>
+
+            <h3>📌 Tujuan</h3>
+            <p>
+                Tujuannya adalah memberikan petunjuk agar pembaca
+                dapat melakukan suatu kegiatan dengan benar.
+            </p>
+
+            <h3>📝 Struktur</h3>
+            <p>
+                Struktur procedure text biasanya terdiri dari:
+            </p>
+
+            <p>
+                1. Goal atau tujuan<br>
+                2. Materials atau bahan<br>
+                3. Steps atau langkah-langkah
+            </p>
+
+            <h3>💡 Contoh</h3>
+            <p>
+                Procedure text dapat digunakan untuk menjelaskan cara
+                membuat makanan, minuman, atau menggunakan suatu alat.
+            </p>
+        `
+    },
+
+    "narrative-text": {
+        title: "Narrative Text",
+        icon: "📚",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Narrative text adalah teks yang menceritakan suatu
+                cerita atau peristiwa secara berurutan.
+            </p>
+
+            <h3>📌 Tujuan</h3>
+            <p>
+                Narrative text bertujuan untuk menghibur pembaca
+                melalui sebuah cerita.
+            </p>
+
+            <h3>📝 Struktur</h3>
+            <p>
+                Struktur narrative text terdiri dari:
+            </p>
+
+            <p>
+                1. Orientation<br>
+                2. Complication<br>
+                3. Resolution
+            </p>
+
+            <h3>💡 Contoh</h3>
+            <p>
+                Cerita rakyat, dongeng, legenda, dan fabel termasuk
+                contoh narrative text.
+            </p>
+        `
+    },
+
+    "interaksi-sosial": {
+        title: "Interaksi Sosial",
+        icon: "👥",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Interaksi sosial adalah hubungan timbal balik antara
+                individu dengan individu, individu dengan kelompok,
+                atau kelompok dengan kelompok.
+            </p>
+
+            <h3>📌 Syarat Interaksi Sosial</h3>
+            <p>
+                Interaksi sosial terjadi apabila terdapat kontak
+                sosial dan komunikasi.
+            </p>
+
+            <h3>🤝 Contoh</h3>
+            <p>
+                Contohnya adalah berdiskusi dengan teman, bekerja sama
+                dalam kelompok, dan melakukan kegiatan bersama
+                masyarakat.
+            </p>
+        `
+    },
+
+    "perubahan-sosial": {
+        title: "Perubahan Sosial",
+        icon: "🌍",
+        content: `
+            <h3>📖 Pengertian</h3>
+            <p>
+                Perubahan sosial adalah perubahan yang terjadi dalam
+                kehidupan masyarakat, baik dalam pola perilaku,
+                nilai, norma, maupun lembaga sosial.
+            </p>
+
+            <h3>📌 Penyebab</h3>
+            <p>
+                Perubahan sosial dapat disebabkan oleh perkembangan
+                teknologi, perubahan jumlah penduduk, penemuan baru,
+                dan pengaruh budaya lain.
+            </p>
+
+            <h3>💡 Contoh</h3>
+            <p>
+                Penggunaan teknologi digital untuk berkomunikasi
+                merupakan salah satu contoh perubahan dalam kehidupan
+                masyarakat.
+            </p>
+        `
+    }
+};
+
+
+/* =====================================================
    BUKA ISI MATERI
 ===================================================== */
+
+let currentMaterialId = "";
+let currentMaterialSubject = "";
 
 function openMaterial(materialId, subject) {
 
@@ -2956,41 +3282,69 @@ function openMaterial(materialId, subject) {
     const content =
         document.getElementById("materialContent");
 
+    const quizButton =
+        document.getElementById("startMaterialQuizButton");
+
     if (
         !materialBox ||
         !contentBox ||
         !contentTitle ||
-        !content
+        !content ||
+        !quizButton
     ) {
-
         console.error(
             "Elemen isi materi tidak ditemukan."
         );
-
         return;
     }
 
-    materialBox.style.display = "none";
+    const material =
+        materialContents[materialId];
 
+    if (!material) {
+        console.error(
+            "Materi tidak ditemukan:",
+            materialId
+        );
+        return;
+    }
+
+    currentMaterialId = materialId;
+    currentMaterialSubject = subject;
+
+    materialBox.style.display = "none";
     contentBox.style.display = "block";
 
     contentTitle.textContent =
-        "📖 " + subject;
+        material.icon + " " + material.title;
 
-    content.innerHTML = `
-        <h3>📚 ${materialId}</h3>
+    content.innerHTML =
+        material.content;
 
-        <p style="margin-top:10px;">
-            Isi materi akan ditambahkan di sini.
-        </p>
-
-        <p style="margin-top:10px;">
-            Pelajari materi dengan baik sebelum
-            mengerjakan kuis! 🌱
-        </p>
-    `;
+    quizButton.onclick = function() {
+        startMaterialQuiz(
+            currentMaterialId,
+            currentMaterialSubject
+        );
+    };
 
     window.scrollTo(0, 0);
+}
+
+
+/* =====================================================
+   MULAI KUIS DARI MATERI
+===================================================== */
+
+function startMaterialQuiz(materialId, subject) {
+
+    console.log(
+        "Mulai kuis:",
+        materialId,
+        subject
+    );
+
+    startQuiz(subject);
 }
 /* =====================================================
    KEMBALI KE MATA PELAJARAN
