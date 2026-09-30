@@ -2205,21 +2205,101 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    // KIRIM LINK RESET
-    const sendResetButton =
-        document.getElementById("sendResetButton");
+// KIRIM LINK RESET
+const sendResetButton =
+    document.getElementById("sendResetButton");
 
-    if (sendResetButton) {
+if (sendResetButton) {
 
-        sendResetButton.addEventListener(
-            "click",
-            function() {
-                sendResetPassword();
-            }
-        );
+    sendResetButton.addEventListener(
+        "click",
+        function() {
+            sendResetPassword();
+        }
+    );
 
+}
+
+
+// =====================================================
+// LUPA PASSWORD
+// =====================================================
+
+async function sendResetPassword() {
+
+    const emailInput =
+        document.getElementById("forgotPasswordEmail");
+
+    const email =
+        emailInput.value.trim();
+
+    if (!email) {
+        alert("📧 Masukkan email terlebih dahulu!");
+        return;
     }
 
+    const { data, error } =
+        await supabaseClient
+            .from("data_pengguna")
+            .select("email")
+            .eq("email", email)
+            .maybeSingle();
+
+    if (error) {
+
+        console.error(
+            "Gagal mengecek email:",
+            error
+        );
+
+        alert(
+            "❌ Terjadi kesalahan saat mengecek email."
+        );
+
+        return;
+    }
+
+    if (!data) {
+
+        alert(
+            "❌ Email belum terdaftar!"
+        );
+
+        return;
+    }
+
+    const { error: resetError } =
+        await supabaseClient.auth
+            .resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        window.location.origin +
+                        window.location.pathname +
+                        "?reset=true"
+                }
+            );
+
+    if (resetError) {
+
+        console.error(
+            "Gagal mengirim email reset:",
+            resetError
+        );
+
+        alert(
+            "❌ Gagal mengirim email reset password.\n\n" +
+            resetError.message
+        );
+
+        return;
+    }
+
+    alert(
+        "📩 Link reset password berhasil dikirim!\n\n" +
+        "Silakan cek email kamu."
+    );
+}
 
     // KEMBALI KE LOGIN
     const backToLoginButton =
