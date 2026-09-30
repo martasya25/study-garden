@@ -772,6 +772,8 @@ let currentSubject = "";
 let currentQuestion = 0;
 let selectedQuestions = [];
 let answerLocked = false;
+let quizStartCorrect = 0;
+let currentQuizMaterialId = null;
 
 
 /* =====================================================
@@ -991,11 +993,17 @@ function startQuiz(subject) {
         return;
     }
 
-    currentSubject = subject;
+currentSubject =
+    subject;
 
-    currentQuestion = 0;
+currentQuestion =
+    0;
 
-    answerLocked = false;
+quizStartCorrect =
+    game.correct;
+
+answerLocked =
+    false;
 
 
     /*
@@ -1331,8 +1339,8 @@ function nextQuestion() {
    SELESAI QUIZ
 ===================================================== */
 
-function finishQuiz() {
-
+async function finishQuiz() {
+    await saveQuizResult();
     /*
        BONUS SELESAI QUIZ
     */
@@ -1420,6 +1428,86 @@ function finishQuiz() {
 
 }
 
+
+/* =====================================================
+   SIMPAN HASIL QUIZ KE DATABASE
+===================================================== */
+/* =====================================================
+   SIMPAN HASIL QUIZ KE DATABASE
+===================================================== */
+
+async function saveQuizResult() {
+
+    if (!game.id_pengguna) {
+        console.error(
+            "ID pengguna tidak ditemukan."
+        );
+        return;
+    }
+
+    if (!currentQuizMaterialId) {
+        console.error(
+            "ID materi kuis tidak ditemukan."
+        );
+        return;
+    }
+
+    const jumlahSoal =
+        selectedQuestions.length;
+
+    const jawabanBenar =
+        Math.max(
+            0,
+            Math.min(
+                jumlahSoal,
+                game.correct - quizStartCorrect
+            )
+        );
+
+    const nilai =
+        jumlahSoal > 0
+            ? (jawabanBenar / jumlahSoal) * 100
+            : 0;
+
+    const { error } =
+        await supabaseClient
+            .from("hasil_kuis")
+            .insert({
+                id_pengguna:
+                    game.id_pengguna,
+
+                id_materi:
+                    currentQuizMaterialId,
+
+                jumlah_soal:
+                    jumlahSoal,
+
+                jawaban_benar:
+                    jawabanBenar,
+
+                nilai:
+                    nilai
+            });
+
+    if (error) {
+
+        console.error(
+            "Gagal menyimpan hasil kuis:",
+            error
+        );
+
+        return;
+    }
+
+    console.log(
+        "Hasil kuis berhasil disimpan:",
+        {
+            jumlahSoal,
+            jawabanBenar,
+            nilai
+        }
+    );
+}
 
 
 /* =====================================================
@@ -3604,14 +3692,20 @@ selectedQuestions =
            7. SIAPKAN KUIS
         ========================================== */
 
-        currentSubject =
-            subject;
+ currentSubject =
+    subject;
 
-        currentQuestion =
-            0;
+currentQuizMaterialId =
+    materi.id_materi;
 
-        answerLocked =
-            false;
+currentQuestion =
+    0;
+
+quizStartCorrect =
+    game.correct;
+
+answerLocked =
+    false;
 
 
         /* ==========================================
