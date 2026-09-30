@@ -1807,12 +1807,10 @@ window.updatePlantInDatabase = async function(plant) {
         .eq("id_tanaman", plant.id_tanaman);
 
     if (error) {
-
         console.error(
             "Gagal update pertumbuhan tanaman:",
             error
         );
-
         return;
     }
 
