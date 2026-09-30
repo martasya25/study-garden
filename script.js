@@ -2856,11 +2856,11 @@ const subjectMaterials = {
 
 function showMaterials(subject) {
 
-    const materialBox =
-        document.getElementById("materialBox");
-
     const subjectBox =
         document.getElementById("subjectBox");
+
+    const materialBox =
+        document.getElementById("materialBox");
 
     const materialList =
         document.getElementById("materialList");
@@ -2871,12 +2871,17 @@ function showMaterials(subject) {
     const materials =
         subjectMaterials[subject];
 
+    if (!subjectBox || !materialBox || !materialList) {
+        console.error("Elemen materi tidak ditemukan.");
+        return;
+    }
+
     if (!materials) {
+        console.error("Mata pelajaran tidak ditemukan:", subject);
         return;
     }
 
     subjectBox.style.display = "none";
-
     materialBox.style.display = "block";
 
     materialSubjectTitle.textContent =
@@ -2889,47 +2894,29 @@ function showMaterials(subject) {
         const button =
             document.createElement("button");
 
-        button.className =
-            "subject-button";
+        button.type = "button";
+        button.className = "subject-button";
 
         button.innerHTML = `
             <span>${material.icon}</span>
 
-            <b>
-                ${material.name}
-            </b>
+            <b>${material.name}</b>
 
-            <small>
-                ${subject}
-            </small>
+            <small>${subject}</small>
         `;
 
-        button.onclick = function() {
+        button.addEventListener("click", function() {
 
             openMaterial(
                 material.id,
                 subject
             );
 
-        };
+        });
 
         materialList.appendChild(button);
 
     });
-
-    window.scrollTo(0, 0);
-}
-
-
-/* =====================================================
-   KEMBALI KE MATA PELAJARAN
-===================================================== */
-
-function backToSubjects() {
-
-    document.getElementById("materialBox").style.display = "none";
-
-    document.getElementById("subjectBox").style.display = "block";
 
     window.scrollTo(0, 0);
 }
