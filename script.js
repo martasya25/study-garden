@@ -2220,87 +2220,6 @@ if (sendResetButton) {
 
 }
 
-
-// =====================================================
-// LUPA PASSWORD
-// =====================================================
-
-async function sendResetPassword() {
-
-    const emailInput =
-        document.getElementById("forgotPasswordEmail");
-
-    const email =
-        emailInput.value.trim();
-
-    if (!email) {
-        alert("📧 Masukkan email terlebih dahulu!");
-        return;
-    }
-
-    const { data, error } =
-        await supabaseClient
-            .from("data_pengguna")
-            .select("email")
-            .eq("email", email)
-            .maybeSingle();
-
-    if (error) {
-
-        console.error(
-            "Gagal mengecek email:",
-            error
-        );
-
-        alert(
-            "❌ Terjadi kesalahan saat mengecek email."
-        );
-
-        return;
-    }
-
-    if (!data) {
-
-        alert(
-            "❌ Email belum terdaftar!"
-        );
-
-        return;
-    }
-
-    const { error: resetError } =
-        await supabaseClient.auth
-            .resetPasswordForEmail(
-                email,
-                {
-                    redirectTo:
-                        window.location.origin +
-                        window.location.pathname +
-                        "?reset=true"
-                }
-            );
-
-    if (resetError) {
-
-        console.error(
-            "Gagal mengirim email reset:",
-            resetError
-        );
-
-        alert(
-            "❌ Gagal mengirim email reset password.\n\n" +
-            resetError.message
-        );
-
-        return;
-    }
-
-    alert(
-        "📩 Link reset password berhasil dikirim!\n\n" +
-        "Silakan cek email kamu."
-    );
-}
-
     // KEMBALI KE LOGIN
     const backToLoginButton =
         document.getElementById("backToLoginButton");
@@ -2832,23 +2751,62 @@ async function sendResetPassword() {
         );
 
 
-    // CEK EMAIL
+    // CEK EMAIL KOSONG
     if (!email) {
 
-        message.textContent =
-            "Masukkan email terlebih dahulu.";
+        alert(
+            "📧 Masukkan email terlebih dahulu!"
+        );
 
         return;
     }
 
 
+    // CEK EMAIL DI DATA PENGGUNA
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("data_pengguna")
+        .select("email")
+        .eq("email", email)
+        .maybeSingle();
+
+
+    // JIKA GAGAL MENGECEK DATABASE
+    if (error) {
+
+        console.error(
+            "Gagal mengecek email:",
+            error
+        );
+
+        alert(
+            "❌ Terjadi kesalahan saat mengecek email."
+        );
+
+        return;
+    }
+
+
+    // EMAIL TIDAK TERDAFTAR
+    if (!data) {
+
+        alert(
+            "❌ Email belum terdaftar!"
+        );
+
+        return;
+    }
+
+
+    // EMAIL TERDAFTAR
     message.textContent =
         "Mengirim link reset password...";
 
 
-    // KIRIM LINK RESET DARI SUPABASE
     const {
-        error
+        error: resetError
     } = await supabaseClient.auth
         .resetPasswordForEmail(
             email,
@@ -2860,23 +2818,30 @@ async function sendResetPassword() {
         );
 
 
-    // JIKA GAGAL
-    if (error) {
+    // JIKA GAGAL MENGIRIM
+    if (resetError) {
 
         console.error(
             "Reset password error:",
-            error
+            resetError
         );
 
-        message.textContent =
-            "Gagal mengirim link: " +
-            error.message;
+        alert(
+            "❌ Gagal mengirim link reset password.\n\n" +
+            resetError.message
+        );
 
         return;
     }
 
 
     // BERHASIL
+    alert(
+        "📩 Link reset password berhasil dikirim!\n\n" +
+        "Silakan cek email kamu."
+    );
+
+
     message.textContent =
         "Link reset password sudah dikirim. Cek email kamu.";
 
