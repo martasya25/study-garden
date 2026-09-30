@@ -1307,11 +1307,11 @@ function checkAnswer(index) {
 
 }   // ← INI WAJIB ADA
 
+
 /* =====================================================
    SOAL BERIKUTNYA / SELESAI
 ===================================================== */
 
-function nextQuestion() {
 /* =====================================================
    SOAL BERIKUTNYA / SELESAI
 ===================================================== */
@@ -1328,9 +1328,7 @@ function nextQuestion() {
 
     }
 
-
     currentQuestion++;
-
 
     if (
         currentQuestion >=
@@ -1342,7 +1340,6 @@ function nextQuestion() {
         return;
 
     }
-
 
     showQuestion();
 
