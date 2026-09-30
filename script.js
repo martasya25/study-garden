@@ -2363,12 +2363,14 @@ async function loginUser() {
 
 async function logoutUser() {
 
+    alert("Tombol Logout berhasil diklik!");
+
     const { error } =
         await supabaseClient.auth.signOut();
 
     if (error) {
         console.error("Logout gagal:", error);
-        alert("Logout gagal. Silakan coba lagi.");
+        alert("Logout gagal: " + error.message);
         return;
     }
 
