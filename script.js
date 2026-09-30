@@ -2029,7 +2029,18 @@ function showAuthForm(type) {
 
 }
 
+/* =====================================================
+   TAMPILKAN HALAMAN LUPA PASSWORD
+===================================================== */
 
+function showForgotPassword() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("forgotPasswordScreen").style.display = "block";
+    document.getElementById("resetPasswordScreen").style.display = "none";
+
+    document.getElementById("authMessage").textContent = "";
+}
 /* =====================================================
    DAFTAR AKUN
 ===================================================== */
@@ -2319,18 +2330,6 @@ function togglePassword(inputId, button) {
 
 }
 
-/* =====================================================
-   TAMPILKAN HALAMAN LUPA PASSWORD
-===================================================== */
-
-function showForgotPassword() {
-    document.getElementById("loginForm").style.display = "none";
-    document.getElementById("registerForm").style.display = "none";
-    document.getElementById("forgotPasswordScreen").style.display = "block";
-    document.getElementById("resetPasswordScreen").style.display = "none";
-
-    document.getElementById("authMessage").textContent = "";
-}
 
 
 /* =====================================================
