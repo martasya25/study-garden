@@ -1785,9 +1785,7 @@ ${plant.growth >= 100 ? `
 
 }
 
-/* =====================================================
-   UPDATE PERTUMBUHAN TANAMAN KE DATABASE
-===================================================== */
+
 /* =====================================================
    UPDATE PERTUMBUHAN TANAMAN KE DATABASE
 ===================================================== */
@@ -1901,11 +1899,16 @@ await window.updatePlantInDatabase(
    PANEN TANAMAN
 ===================================================== */
 
-function harvestPlant(index) {
+window.harvestPlant = function(index) {
+
+    console.log("TOMBOL PANEN DIKLIK:", index);
 
     const plant = game.plants[index];
 
+    console.log("TANAMAN:", plant);
+
     if (!plant) {
+        console.error("Tanaman tidak ditemukan.");
         return;
     }
 
@@ -1914,16 +1917,11 @@ function harvestPlant(index) {
         return;
     }
 
-    // Hapus tanaman dari kebun
     game.plants.splice(index, 1);
 
-    // Tambah 1 hati
     game.lives += 1;
 
-    // Simpan perubahan
     saveGame();
-
-    // Perbarui tampilan
     updateUI();
     renderPlants();
 
@@ -1931,7 +1929,9 @@ function harvestPlant(index) {
         "🌾 Panen berhasil!\n\n" +
         "❤️ +1 hati"
     );
-}
+};
+
+
 /* =====================================================
    TOKO
 ===================================================== */
