@@ -1387,29 +1387,26 @@ async function savePlantToDatabase(plant) {
    SELESAI QUIZ
 ===================================================== */
 async function finishQuiz() {
+
     console.log("FINISH QUIZ TERPANGGIL");
 
     await saveQuizResult();
 
-    /*
-       BONUS SELESAI QUIZ
-    */
+    console.log("=== FINISH: SUDAH LEWAT SAVE QUIZ ===");
 
     game.xp += 20;
     game.coins += 20;
     game.water += 1;
 
-    /*
-       TANAMAN BARU DARI DATABASE
-    */
+    console.log("=== FINISH: MAU AMBIL DATA TANAMAN ===");
 
-const { data: plants, error } =
-    await supabaseClient
-        .from("data_tanaman")
-        .select("*");
+    const { data: plants, error } =
+        await supabaseClient
+            .from("data_tanaman")
+            .select("*");
 
-console.log("DATA TANAMAN:", plants);
-console.log("ERROR DATA TANAMAN:", error);
+    console.log("DATA TANAMAN:", plants);
+    console.log("ERROR DATA TANAMAN:", error);
 
     if (error) {
 
