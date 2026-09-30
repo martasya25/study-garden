@@ -1201,58 +1201,93 @@ function checkAnswer(index) {
         return;
     }
 
-    const q = selectedQuestions[currentQuestion];
+    const q =
+        selectedQuestions[currentQuestion];
 
     if (!q) {
-        console.error("Soal tidak ditemukan.");
+        console.error(
+            "Soal tidak ditemukan:",
+            currentQuestion
+        );
         return;
     }
 
     answerLocked = true;
 
-    const clickedButton =
-        document.querySelector(
-            `button[onclick="checkAnswer(${index})"]`
+    const buttons =
+        document.querySelectorAll(
+            ".answer-button"
         );
+
+    const clickedButton =
+        buttons[index];
 
     const correctButton =
-        document.querySelector(
-            `button[onclick="checkAnswer(${q.correct})"]`
-        );
+        buttons[q.correct];
 
-    // Jawaban benar
+
+    /* ==========================================
+       TANDAI JAWABAN
+    ========================================== */
+
     if (correctButton) {
         correctButton.classList.add("correct");
     }
 
-    // Jawaban salah
-    if (index !== q.correct) {
+    if (
+        index !== q.correct &&
+        clickedButton
+    ) {
+        clickedButton.classList.add("wrong");
+    }
 
-        if (clickedButton) {
-            clickedButton.classList.add("wrong");
-        }
 
-        alert("❌ Jawaban salah!");
+    /* ==========================================
+       CEK BENAR / SALAH
+    ========================================== */
 
-        game.lives--;
-
-        if (game.lives <= 0) {
-            game.lives = 3;
-        }
-
-    } else {
+    if (index === q.correct) {
 
         alert("✅ Jawaban benar!");
 
         game.xp += 20;
         game.coins += 10;
         game.water += 1;
+
+        game.correct++;
+
+    } else {
+
+        alert(
+            "❌ Jawaban salah!\n\n" +
+            "Jawaban yang benar: " +
+            q.answers[q.correct]
+        );
+
+        game.lives--;
+
+        if (game.lives <= 0) {
+            game.lives = 3;
+        }
     }
 
-    saveGame();
-    renderGame();
 
-    // Tunggu sebentar lalu lanjut
+    /* ==========================================
+       HITUNG SOAL
+    ========================================== */
+
+    game.answered++;
+
+
+    saveGame();
+
+    updateUI();
+
+
+    /* ==========================================
+       LANJUT KE SOAL BERIKUTNYA
+    ========================================== */
+
     setTimeout(function() {
 
         currentQuestion++;
@@ -1263,14 +1298,17 @@ function checkAnswer(index) {
         ) {
 
             answerLocked = false;
+
             showQuestion();
 
         } else {
 
             finishQuiz();
+
         }
 
     }, 700);
+
 }
 
 /* =====================================================
