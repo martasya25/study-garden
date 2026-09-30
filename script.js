@@ -1844,7 +1844,7 @@ function harvestPlant(index) {
    SIRAM TANAMAN
 ===================================================== */
 
-function waterPlant(index) {
+async function waterPlant(index) {
 
     if (game.water <= 0) {
 
@@ -1888,6 +1888,11 @@ function waterPlant(index) {
     }
 
 
+    await updatePlantInDatabase(
+        game.plants[index]
+    );
+
+
     game.xp += 5;
 
 
@@ -1898,7 +1903,6 @@ function waterPlant(index) {
     renderPlants();
 
 }
-
 
 /* =====================================================
    TOKO
