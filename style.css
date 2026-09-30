@@ -795,6 +795,12 @@ button:active{
     margin-top: 15px;
     line-height: 1.6;
 }
+#forgotPasswordScreen {
+    display: none !important;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+}
 @media (max-width: 480px) {
 
     .auth-card {
