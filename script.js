@@ -2363,7 +2363,8 @@ async function loginUser() {
 
 async function logoutUser() {
 
-    const { error } = await supabaseClient.auth.signOut();
+    const { error } =
+        await supabaseClient.auth.signOut();
 
     if (error) {
         console.error("Logout gagal:", error);
@@ -2378,6 +2379,8 @@ async function logoutUser() {
 
     window.scrollTo(0, 0);
 }
+
+
 /* =====================================================
    TAMPILKAN / SEMBUNYIKAN PASSWORD
 ===================================================== */
