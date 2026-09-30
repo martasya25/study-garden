@@ -1970,23 +1970,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    // LUPA PASSWORD
-    const forgotPasswordLink =
-        document.getElementById("forgotPasswordLink");
-
-    if (forgotPasswordLink) {
-
-        forgotPasswordLink.addEventListener(
-            "click",
-            function(event) {
-
-                event.preventDefault();
-                showForgotPassword();
-
-            }
-        );
-
-    }
 
 
     // KIRIM LINK RESET
