@@ -2962,6 +2962,7 @@ function openMaterial(materialId, subject) {
         !contentTitle ||
         !content
     ) {
+
         console.error(
             "Elemen isi materi tidak ditemukan."
         );
@@ -2979,11 +2980,11 @@ function openMaterial(materialId, subject) {
     content.innerHTML = `
         <h3>📚 ${materialId}</h3>
 
-        <p>
+        <p style="margin-top:10px;">
             Isi materi akan ditambahkan di sini.
         </p>
 
-        <p>
+        <p style="margin-top:10px;">
             Pelajari materi dengan baik sebelum
             mengerjakan kuis! 🌱
         </p>
@@ -2991,7 +2992,6 @@ function openMaterial(materialId, subject) {
 
     window.scrollTo(0, 0);
 }
-
 /* =====================================================
    KEMBALI KE MATA PELAJARAN
 ===================================================== */
