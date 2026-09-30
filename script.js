@@ -1901,16 +1901,53 @@ function saveProfile() {
 /* =====================================================
    START APLIKASI
 ===================================================== */
-
 document.addEventListener("DOMContentLoaded", function() {
 
     loadGame();
 
+    // ==========================================
+    // DETEKSI RESET PASSWORD DARI EMAIL
+    // ==========================================
+
+    supabaseClient.auth.onAuthStateChange(function(event) {
+
+        if (event === "PASSWORD_RECOVERY") {
+            showResetPasswordScreen();
+        }
+
+    });
+
+
+    // ==========================================
+    // TOMBOL SIMPAN PASSWORD BARU
+    // ==========================================
+
+    const updatePasswordButton =
+        document.getElementById("updatePasswordButton");
+
+    if (updatePasswordButton) {
+
+        updatePasswordButton.addEventListener(
+            "click",
+            function() {
+
+                updateNewPassword();
+
+            }
+        );
+
+    }
+
+
+    // ==========================================
     // FORM DAFTAR
+    // ==========================================
+
     const registerForm =
         document.getElementById("registerForm");
 
     if (registerForm) {
+
         registerForm.addEventListener(
             "submit",
             function(event) {
@@ -1921,14 +1958,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         );
+
     }
 
 
+    // ==========================================
     // FORM LOGIN
+    // ==========================================
+
     const loginForm =
         document.getElementById("loginForm");
 
     if (loginForm) {
+
         loginForm.addEventListener(
             "submit",
             function(event) {
@@ -1939,16 +1981,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         );
+
     }
 
 
+    // ==========================================
     // LUPA PASSWORD
+    // ==========================================
+
     const forgotPasswordLink =
-        document.getElementById(
-            "forgotPasswordLink"
-        );
+        document.getElementById("forgotPasswordLink");
 
     if (forgotPasswordLink) {
+
         forgotPasswordLink.addEventListener(
             "click",
             function(event) {
@@ -1959,16 +2004,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         );
+
     }
 
 
-    // KIRIM LINK RESET PASSWORD
+    // ==========================================
+    // KIRIM LINK RESET
+    // ==========================================
+
     const sendResetButton =
-        document.getElementById(
-            "sendResetButton"
-        );
+        document.getElementById("sendResetButton");
 
     if (sendResetButton) {
+
         sendResetButton.addEventListener(
             "click",
             function() {
@@ -1977,16 +2025,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         );
+
     }
 
 
+    // ==========================================
     // KEMBALI KE LOGIN
+    // ==========================================
+
     const backToLoginButton =
-        document.getElementById(
-            "backToLoginButton"
-        );
+        document.getElementById("backToLoginButton");
 
     if (backToLoginButton) {
+
         backToLoginButton.addEventListener(
             "click",
             function(event) {
@@ -1997,10 +2048,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         );
+
     }
 
 });
-
 
 /* =====================================================
    PILIH LOGIN / DAFTAR
@@ -2329,27 +2380,12 @@ function togglePassword(inputId, button) {
 ===================================================== */
 
 function showForgotPassword() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("forgotPasswordScreen").style.display = "block";
+    document.getElementById("resetPasswordScreen").style.display = "none";
 
-    document.getElementById(
-        "loginForm"
-    ).style.display = "none";
-
-    document.getElementById(
-        "registerForm"
-    ).style.display = "none";
-
-document.getElementById(
-    "forgotPasswordScreen"
-).style.setProperty(
-    "display",
-    "block",
-    "important"
-);
-
-    document.getElementById(
-        "authMessage"
-    ).textContent = "";
-
+    document.getElementById("authMessage").textContent = "";
 }
 
 
@@ -2438,6 +2474,88 @@ async function sendResetPassword() {
 
     message.textContent =
         "Link reset password sudah dikirim. Cek email kamu.";
+}
+/* =====================================================
+   RESET PASSWORD
+===================================================== */
+
+function showResetPasswordScreen() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("forgotPasswordScreen").style.display = "none";
+    document.getElementById("resetPasswordScreen").style.display = "block";
+
+    document.getElementById("authMessage").textContent = "";
+}
+async function updateNewPassword() {
+
+    const password =
+        document.getElementById("newPassword").value;
+
+    const confirmPassword =
+        document.getElementById("confirmNewPassword").value;
+
+    const message =
+        document.getElementById("resetPasswordMessage");
+
+    if (!password || !confirmPassword) {
+        message.textContent =
+            "Password baru harus diisi.";
+        return;
+    }
+
+    if (password.length < 6) {
+        message.textContent =
+            "Password minimal 6 karakter.";
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        message.textContent =
+            "Password tidak sama.";
+        return;
+    }
+
+    message.textContent =
+        "Menyimpan password baru...";
+
+    const { error } =
+        await supabaseClient.auth.updateUser({
+            password: password
+        });
+
+    if (error) {
+        console.error("Update password error:", error);
+
+        message.textContent =
+            "Gagal mengubah password: " +
+            error.message;
+
+        return;
+    }
+
+    message.textContent =
+        "Password berhasil diubah! Silakan masuk kembali.";
+
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmNewPassword").value = "";
+
+    await supabaseClient.auth.signOut();
+
+    setTimeout(function() {
+
+        document.getElementById("resetPasswordScreen").style.display =
+            "none";
+
+        document.getElementById("loginForm").style.display =
+            "block";
+
+        document.getElementById("loginTab").classList.add("active");
+        document.getElementById("registerTab").classList.remove("active");
+
+        message.textContent = "";
+
+    }, 1500);
 }
 
 /* =====================================================
