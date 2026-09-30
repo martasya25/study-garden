@@ -13,6 +13,7 @@ const supabaseClient = window.supabase.createClient(
 let game = {
     name: "Pelajar",
     avatar: "🧑‍🌾",
+    id_pengguna: null,
     xp: 0,
     coins: 50,
     water: 3,
@@ -2796,6 +2797,9 @@ async function loadUserProfile(email) {
     // MASUKKAN DATA DATABASE KE GAME
     game.name =
         data.nama_pengguna;
+    
+    game.id_pengguna =
+    data.id_pengguna;
 
     game.xp =
         data.xp;
