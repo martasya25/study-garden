@@ -2992,7 +2992,6 @@ function openMaterial(materialId, subject) {
     window.scrollTo(0, 0);
 }
 
-
 /* =====================================================
    KEMBALI KE MATA PELAJARAN
 ===================================================== */
