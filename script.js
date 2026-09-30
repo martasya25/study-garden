@@ -3022,3 +3022,8 @@ console.log(
     "showMaterials:",
     typeof showMaterials
 );
+
+console.log(
+    "openMaterial:",
+    typeof openMaterial
+);
