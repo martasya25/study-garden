@@ -3518,69 +3518,42 @@ async function startMaterialQuiz(materialId, subject) {
               KE FORMAT KUIS
         ========================================== */
 
-        selectedQuestions =
-            soalData.map(function(soal) {
+selectedQuestions =
+    soalData.map(function(soal) {
 
-                let correctIndex;
+        let correctIndex;
 
+        if (soal.jawaban_benar === "A") {
+            correctIndex = 0;
+        } else if (soal.jawaban_benar === "B") {
+            correctIndex = 1;
+        } else if (soal.jawaban_benar === "C") {
+            correctIndex = 2;
+        } else if (soal.jawaban_benar === "D") {
+            correctIndex = 3;
+        } else {
+            correctIndex =
+                Number(soal.jawaban_benar);
+        }
 
-                if (
-                    soal.jawaban_benar === "A"
-                ) {
+        return {
 
-                    correctIndex = 0;
+            question:
+                soal.pertanyaan,
 
-                } else if (
-                    soal.jawaban_benar === "B"
-                ) {
+            answers: [
+                soal.pilihan_a,
+                soal.pilihan_b,
+                soal.pilihan_c,
+                soal.pilihan_d
+            ],
 
-                    correctIndex = 1;
+            correct:
+                correctIndex
 
-                } else if (
-                    soal.jawaban_benar === "C"
-                ) {
+        };
 
-                    correctIndex = 2;
-
-                } else if (
-                    soal.jawaban_benar === "D"
-                ) {
-
-                    correctIndex = 3;
-
-                } else {
-
-                    correctIndex =
-                        Number(
-                            soal.jawaban_benar
-                        );
-
-                }
-
-
-                return {
-
-                    question:
-                        soal.pertanyaan,
-
-                    answers: [
-
-                        soal.pilihan_a,
-
-                        soal.pilihan_b,
-
-                        soal.pilihan_c,
-
-                        soal.pilihan_d
-
-                    ],
-
-                    correct:
-                        correctIndex
-
-                };
-
-            });
+    });
 
 
         /* ==========================================
