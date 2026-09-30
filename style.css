@@ -697,6 +697,46 @@ button:active{
     text-decoration: underline;
 }
 
+/* =====================================================
+   LUPA PASSWORD
+===================================================== */
+
+#forgotPasswordScreen {
+    padding: 25px;
+}
+
+#forgotPasswordScreen h2 {
+    margin-bottom: 15px;
+}
+
+#forgotPasswordScreen p {
+    line-height: 1.6;
+    margin-bottom: 18px;
+}
+
+#forgotPasswordEmail {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+#sendResetButton {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+}
+
+#backToLoginButton {
+    display: block;
+    text-align: center;
+    line-height: 1.6;
+}
+
 @media (max-width: 480px) {
 
     .auth-card {
