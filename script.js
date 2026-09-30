@@ -2338,9 +2338,13 @@ function showForgotPassword() {
         "registerForm"
     ).style.display = "none";
 
-    document.getElementById(
-        "forgotPasswordScreen"
-    ).style.display = "block";
+document.getElementById(
+    "forgotPasswordScreen"
+).style.setProperty(
+    "display",
+    "block",
+    "important"
+);
 
     document.getElementById(
         "authMessage"
@@ -2355,10 +2359,13 @@ function showForgotPassword() {
 
 function backToLogin() {
 
-    document.getElementById(
-        "forgotPasswordScreen"
-    ).style.display = "none";
-
+document.getElementById(
+    "forgotPasswordScreen"
+).style.setProperty(
+    "display",
+    "none",
+    "important"
+);
     document.getElementById(
         "loginForm"
     ).style.display = "block";
