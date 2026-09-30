@@ -1194,7 +1194,6 @@ function showQuestion() {
 /* =====================================================
    CEK JAWABAN
 ===================================================== */
-
 function checkAnswer(index) {
 
     if (answerLocked) {
@@ -1225,11 +1224,6 @@ function checkAnswer(index) {
     const correctButton =
         buttons[q.correct];
 
-
-    /* ==========================================
-       TANDAI JAWABAN
-    ========================================== */
-
     if (correctButton) {
         correctButton.classList.add("correct");
     }
@@ -1240,11 +1234,6 @@ function checkAnswer(index) {
     ) {
         clickedButton.classList.add("wrong");
     }
-
-
-    /* ==========================================
-       CEK BENAR / SALAH
-    ========================================== */
 
     if (index === q.correct) {
 
@@ -1271,22 +1260,11 @@ function checkAnswer(index) {
         }
     }
 
-
-    /* ==========================================
-       HITUNG SOAL
-    ========================================== */
-
     game.answered++;
-
 
     saveGame();
 
     updateUI();
-
-
-    /* ==========================================
-       LANJUT KE SOAL BERIKUTNYA
-    ========================================== */
 
     setTimeout(function() {
 
