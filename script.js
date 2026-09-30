@@ -3009,6 +3009,22 @@ function backToSubjects() {
     window.scrollTo(0, 0);
 }
 
+/* =====================================================
+   KEMBALI KE DAFTAR MATERI
+===================================================== */
+
+function backToMaterials() {
+
+    document.getElementById(
+        "materialContentBox"
+    ).style.display = "none";
+
+    document.getElementById(
+        "materialBox"
+    ).style.display = "block";
+
+    window.scrollTo(0, 0);
+}
 
 /* =====================================================
    CEK JAVASCRIPT
