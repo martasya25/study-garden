@@ -1898,7 +1898,6 @@ function saveProfile() {
 
 }
 
-
 /* =====================================================
    START APLIKASI
 ===================================================== */
@@ -1907,29 +1906,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadGame();
 
-    // Form DAFTAR
-    document.getElementById("registerForm").addEventListener(
-        "submit",
-        function(event) {
+    // FORM DAFTAR
+    const registerForm = document.getElementById("registerForm");
+
+    if (registerForm) {
+        registerForm.addEventListener("submit", function(event) {
             event.preventDefault();
             registerUser();
-        }
-    );
+        });
+    }
 
-    // Form LOGIN
-    document.getElementById("loginForm").addEventListener(
-        "submit",
-        function(event) {
+    // FORM LOGIN
+    const loginForm = document.getElementById("loginForm");
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", function(event) {
             event.preventDefault();
             loginUser();
-        }
-    );
+        });
+    }
 
 });
 
 
 /* =====================================================
-   PILIH FORM LOGIN / DAFTAR
+   PILIH LOGIN / DAFTAR
 ===================================================== */
 
 function showAuthForm(type) {
@@ -1957,6 +1958,7 @@ function showAuthForm(type) {
         registerTab.classList.remove("active");
 
     }
+
 }
 
 
@@ -1980,10 +1982,11 @@ async function registerUser() {
         .getElementById("registerPassword")
         .value;
 
-    const authMessage = document.getElementById("authMessage");
+    const authMessage =
+        document.getElementById("authMessage");
 
 
-    // Cek data kosong
+    // CEK DATA
     if (!name || !email || !password) {
 
         authMessage.textContent =
@@ -1993,7 +1996,7 @@ async function registerUser() {
     }
 
 
-    // Cek panjang password
+    // CEK PASSWORD
     if (password.length < 6) {
 
         authMessage.textContent =
@@ -2007,7 +2010,7 @@ async function registerUser() {
         "Mendaftarkan akun...";
 
 
-    // Daftar ke Supabase Auth
+    // DAFTAR KE SUPABASE AUTH
     const { data, error } =
         await supabaseClient.auth.signUp({
 
@@ -2024,10 +2027,13 @@ async function registerUser() {
         });
 
 
-    // Jika gagal
+    // JIKA PENDAFTARAN GAGAL
     if (error) {
 
-        console.error("Register error:", error);
+        console.error(
+            "Register error:",
+            error
+        );
 
         authMessage.textContent =
             "Pendaftaran gagal: " + error.message;
@@ -2036,7 +2042,7 @@ async function registerUser() {
     }
 
 
-    // Simpan profil ke tabel data_pengguna
+    // SIMPAN DATA KE DATA_PENGGUNA
     if (data.user) {
 
         const { error: profileError } =
@@ -2054,7 +2060,7 @@ async function registerUser() {
                 });
 
 
-        // Jika profil gagal disimpan
+        // JIKA GAGAL SIMPAN PROFIL
         if (profileError) {
 
             console.error(
@@ -2067,26 +2073,28 @@ async function registerUser() {
 
             return;
         }
+
     }
 
 
-    // Berhasil
+    // PENDAFTARAN BERHASIL
     authMessage.textContent =
         "Pendaftaran berhasil! Silakan masuk.";
 
 
-    // Kosongkan form
+    // KOSONGKAN FORM
     document
         .getElementById("registerForm")
         .reset();
 
 
-    // Pindah ke Login
+    // PINDAH KE LOGIN
     setTimeout(function() {
 
         showAuthForm("login");
 
     }, 1500);
+
 }
 
 
@@ -2109,7 +2117,7 @@ async function loginUser() {
         document.getElementById("authMessage");
 
 
-    // Cek data kosong
+    // CEK INPUT
     if (!email || !password) {
 
         authMessage.textContent =
@@ -2123,17 +2131,46 @@ async function loginUser() {
         "Memeriksa akun...";
 
 
-    // Login melalui Supabase Auth
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
+    /* -------------------------------------------------
+       CEK EMAIL DI DATA PENGGUNA
+    ------------------------------------------------- */
 
-            email: email,
-            password: password
+    const {
+        data: profile,
+        error: profileError
+    } = await supabaseClient
+        .from("data_pengguna")
+        .select("email")
+        .eq("email", email)
+        .maybeSingle();
 
-        });
+
+    // JIKA EMAIL TIDAK ADA
+    if (!profile) {
+
+        authMessage.textContent =
+            "Email yang digunakan belum terdaftar.";
+
+        return;
+    }
 
 
-    // Login gagal
+    /* -------------------------------------------------
+       LOGIN SUPABASE AUTH
+    ------------------------------------------------- */
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.signInWithPassword({
+
+        email: email,
+        password: password
+
+    });
+
+
+    // JIKA LOGIN GAGAL
     if (error) {
 
         console.error(
@@ -2142,13 +2179,16 @@ async function loginUser() {
         );
 
         authMessage.textContent =
-            "Email atau password salah.";
+            "Password salah.";
 
         return;
     }
 
 
-    // Login berhasil
+    /* -------------------------------------------------
+       LOGIN BERHASIL
+    ------------------------------------------------- */
+
     if (data.user) {
 
         await loadUserProfile(
@@ -2156,44 +2196,76 @@ async function loginUser() {
         );
 
 
-        // Sembunyikan halaman login
+        // SEMBUNYIKAN HALAMAN LOGIN
         document.getElementById(
             "authScreen"
         ).style.display = "none";
 
 
-        // Tampilkan aplikasi
+        // TAMPILKAN APLIKASI
         document.getElementById(
             "mainApp"
         ).style.display = "block";
 
 
-        // Kosongkan form
+        // KOSONGKAN FORM
         document
             .getElementById("loginForm")
             .reset();
 
 
+        // HAPUS PESAN
         authMessage.textContent = "";
+
     }
+
 }
 
 
 /* =====================================================
-   AMBIL DATA PROFIL PENGGUNA
+   TAMPILKAN / SEMBUNYIKAN PASSWORD
+===================================================== */
+
+function togglePassword(inputId, button) {
+
+    const input =
+        document.getElementById(inputId);
+
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        button.textContent = "🙈";
+
+    } else {
+
+        input.type = "password";
+
+        button.textContent = "👁️";
+
+    }
+
+}
+
+
+/* =====================================================
+   AMBIL DATA PROFIL DARI DATABASE
 ===================================================== */
 
 async function loadUserProfile(email) {
 
-    const { data, error } =
-        await supabaseClient
-            .from("data_pengguna")
-            .select("*")
-            .eq("email", email)
-            .single();
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("data_pengguna")
+        .select("*")
+        .eq("email", email)
+        .single();
 
 
-    // Jika gagal mengambil profil
+    // JIKA GAGAL
     if (error) {
 
         console.error(
@@ -2205,18 +2277,24 @@ async function loadUserProfile(email) {
     }
 
 
-    // Masukkan data database ke game
-    game.name = data.nama_pengguna;
+    // MASUKKAN DATA DATABASE KE GAME
+    game.name =
+        data.nama_pengguna;
 
-    game.xp = data.xp;
+    game.xp =
+        data.xp;
 
-    game.coins = data.koin;
+    game.coins =
+        data.koin;
 
-    game.lives = data.hati;
+    game.lives =
+        data.hati;
 
-    game.level = data.level;
+    game.level =
+        data.level;
 
 
-    // Perbarui tampilan
+    // PERBARUI TAMPILAN
     updateUI();
+
 }
