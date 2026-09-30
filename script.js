@@ -1785,6 +1785,9 @@ ${plant.growth >= 100 ? `
 /* =====================================================
    UPDATE PERTUMBUHAN TANAMAN KE DATABASE
 ===================================================== */
+/* =====================================================
+   UPDATE PERTUMBUHAN TANAMAN KE DATABASE
+===================================================== */
 
 window.updatePlantInDatabase = async function(plant) {
 
@@ -1798,11 +1801,6 @@ window.updatePlantInDatabase = async function(plant) {
         return;
     }
 
-    console.log("UPDATE DATABASE:");
-    console.log("ID pengguna:", game.id_pengguna);
-    console.log("ID tanaman:", plant.id_tanaman);
-    console.log("Growth:", plant.growth);
-
     const { data, error } = await supabaseClient
         .from("kebun_pengguna")
         .update({
@@ -1811,9 +1809,6 @@ window.updatePlantInDatabase = async function(plant) {
         .eq("id_pengguna", game.id_pengguna)
         .eq("id_tanaman", plant.id_tanaman)
         .select();
-
-    console.log("HASIL UPDATE:", data);
-    console.log("ERROR UPDATE:", error);
 
     if (error) {
 
@@ -1825,21 +1820,16 @@ window.updatePlantInDatabase = async function(plant) {
         return;
     }
 
-    if (!data || data.length === 0) {
-
-        console.error(
-            "UPDATE TIDAK MENEMUKAN BARIS TANAMAN!"
-        );
-
-        return;
-    }
+    console.log(
+        "HASIL UPDATE TANAMAN:",
+        data
+    );
 
     console.log(
         "Pertumbuhan tanaman berhasil disimpan:",
         plant.growth + "%"
     );
 };
-
 /* =====================================================
    SIRAM TANAMAN
 ===================================================== */
