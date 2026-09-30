@@ -1403,10 +1403,13 @@ async function finishQuiz() {
        TANAMAN BARU DARI DATABASE
     */
 
-    const { data: plants, error } =
-        await supabaseClient
-            .from("data_tanaman")
-            .select("*");
+const { data: plants, error } =
+    await supabaseClient
+        .from("data_tanaman")
+        .select("*");
+
+console.log("DATA TANAMAN:", plants);
+console.log("ERROR DATA TANAMAN:", error);
 
     if (error) {
 
