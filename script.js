@@ -3015,13 +3015,22 @@ function backToSubjects() {
 
 function backToMaterials() {
 
-    document.getElementById(
-        "materialContentBox"
-    ).style.display = "none";
+    const contentBox =
+        document.getElementById("materialContentBox");
 
-    document.getElementById(
-        "materialBox"
-    ).style.display = "block";
+    const materialBox =
+        document.getElementById("materialBox");
+
+    if (!contentBox || !materialBox) {
+        console.error(
+            "Elemen kembali ke materi tidak ditemukan."
+        );
+        return;
+    }
+
+    contentBox.style.display = "none";
+
+    materialBox.style.display = "block";
 
     window.scrollTo(0, 0);
 }
