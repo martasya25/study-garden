@@ -1340,6 +1340,7 @@ function nextQuestion() {
 ===================================================== */
 
 async function finishQuiz() {
+    console.log("FINISH QUIZ TERPANGGIL");
     await saveQuizResult();
     /*
        BONUS SELESAI QUIZ
