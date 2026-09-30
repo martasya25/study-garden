@@ -2030,10 +2030,6 @@ button:active{
     margin-bottom:12px;
 }
 
-#startMaterialQuizButton{
-    width:100%;
-}
-
 /* =====================================================
    TOMBOL MATERI
 ===================================================== */
@@ -2122,7 +2118,7 @@ button:active{
         #66bb6a
     ) !important;
 
-    color: #ffffff !important;
+    color: white !important;
 
     font-family: Arial, sans-serif;
     font-size: 16px !important;
