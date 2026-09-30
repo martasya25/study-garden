@@ -1275,28 +1275,37 @@ function checkAnswer(index) {
 
     updateUI();
 
-    setTimeout(function() {
+setTimeout(function() {
 
-        currentQuestion++;
+    currentQuestion++;
 
-        if (
-            currentQuestion <
-            selectedQuestions.length
-        ) {
+    console.log(
+        "Progress quiz:",
+        currentQuestion,
+        "/",
+        selectedQuestions.length
+    );
 
-            answerLocked = false;
+    if (
+        currentQuestion <
+        selectedQuestions.length
+    ) {
 
-            showQuestion();
+        answerLocked = false;
 
-        } else {
+        showQuestion();
 
-            finishQuiz();
+    } else {
 
-        }
+        console.log(
+            "SOAL TERAKHIR SELESAI — MEMANGGIL FINISH QUIZ"
+        );
 
-    }, 700);
+        finishQuiz();
 
-}
+    }
+
+}, 700);
 
 /* =====================================================
    SOAL BERIKUTNYA / SELESAI
