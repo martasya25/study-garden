@@ -1786,7 +1786,7 @@ ${plant.growth >= 100 ? `
    UPDATE PERTUMBUHAN TANAMAN KE DATABASE
 ===================================================== */
 
-async function updatePlantInDatabase(plant) {
+window.updatePlantInDatabase = async function(plant) {
 
     if (!game.id_pengguna) {
         console.error("ID pengguna tidak ditemukan.");
@@ -1820,7 +1820,7 @@ async function updatePlantInDatabase(plant) {
         "Pertumbuhan tanaman berhasil disimpan:",
         plant.growth + "%"
     );
-}
+};
 /* =====================================================
    PANEN TANAMAN
 ===================================================== */
@@ -1926,9 +1926,9 @@ async function waterPlant(index) {
     }
 
 
-    await updatePlantInDatabase(
-        game.plants[index]
-    );
+await window.updatePlantInDatabase(
+    game.plants[index]
+);
 
 
     game.xp += 5;
