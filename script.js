@@ -3354,15 +3354,126 @@ function openMaterial(materialId, subject) {
    MULAI KUIS DARI MATERI
 ===================================================== */
 
-function startMaterialQuiz(materialId, subject) {
+async function startMaterialQuiz(materialId, subject) {
 
     console.log(
-        "Mulai kuis:",
+        "Mulai kuis materi:",
         materialId,
         subject
     );
 
-    startQuiz(subject);
+    try {
+
+        // Cari nama materi dari data yang sudah ada
+        const material =
+            materialContents[materialId];
+
+        if (!material) {
+            alert("Materi tidak ditemukan.");
+            return;
+        }
+
+        // Cari materi di database
+        const { data: materiData, error: materiError } =
+            await supabaseClient
+                .from("data_materi")
+                .select("id_materi, nama_materi")
+                .eq("nama_materi", material.title)
+                .single();
+
+        if (materiError) {
+            console.error(
+                "Gagal mengambil data materi:",
+                materiError
+            );
+
+            alert("Data materi belum tersedia di database.");
+            return;
+        }
+
+        // Ambil soal berdasarkan id materi
+        const { data: soalData, error: soalError } =
+            await supabaseClient
+                .from("data_soal_kuis")
+                .select(`
+                    id_soal,
+                    pertanyaan,
+                    pilihan_a,
+                    pilihan_b,
+                    pilihan_c,
+                    pilihan_d,
+                    jawaban_benar,
+                    tingkat_kesulitan
+                `)
+                .eq("id_materi", materiData.id_materi);
+
+        if (soalError) {
+            console.error(
+                "Gagal mengambil soal:",
+                soalError
+            );
+
+            alert("Soal belum bisa diambil dari database.");
+            return;
+        }
+
+        if (!soalData || soalData.length === 0) {
+            alert("Belum ada soal untuk materi ini.");
+            return;
+        }
+
+        console.log(
+            "Soal dari database:",
+            soalData
+        );
+
+        // Simpan soal untuk kuis
+        selectedQuestions = soalData.map(function(soal) {
+
+            return {
+                question: soal.pertanyaan,
+
+                options: [
+                    soal.pilihan_a,
+                    soal.pilihan_b,
+                    soal.pilihan_c,
+                    soal.pilihan_d
+                ],
+
+                answer:
+                    soal.jawaban_benar
+            };
+
+        });
+
+        currentSubject = subject;
+        currentQuestion = 0;
+        answerLocked = false;
+
+        // Tampilkan halaman kuis
+        document.getElementById(
+            "materialContentBox"
+        ).style.display = "none";
+
+        document.getElementById(
+            "quizBox"
+        ).style.display = "block";
+
+        showQuestion();
+
+        window.scrollTo(0, 0);
+
+    } catch (error) {
+
+        console.error(
+            "Error mulai kuis:",
+            error
+        );
+
+        alert(
+            "Terjadi kesalahan saat membuka kuis."
+        );
+    }
 }
 
 /* =====================================================
