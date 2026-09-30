@@ -1907,23 +1907,96 @@ document.addEventListener("DOMContentLoaded", function() {
     loadGame();
 
     // FORM DAFTAR
-    const registerForm = document.getElementById("registerForm");
+    const registerForm =
+        document.getElementById("registerForm");
 
     if (registerForm) {
-        registerForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            registerUser();
-        });
+        registerForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                registerUser();
+
+            }
+        );
     }
 
+
     // FORM LOGIN
-    const loginForm = document.getElementById("loginForm");
+    const loginForm =
+        document.getElementById("loginForm");
 
     if (loginForm) {
-        loginForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            loginUser();
-        });
+        loginForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                loginUser();
+
+            }
+        );
+    }
+
+
+    // LUPA PASSWORD
+    const forgotPasswordLink =
+        document.getElementById(
+            "forgotPasswordLink"
+        );
+
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                showForgotPassword();
+
+            }
+        );
+    }
+
+
+    // KIRIM LINK RESET PASSWORD
+    const sendResetButton =
+        document.getElementById(
+            "sendResetButton"
+        );
+
+    if (sendResetButton) {
+        sendResetButton.addEventListener(
+            "click",
+            function() {
+
+                sendResetPassword();
+
+            }
+        );
+    }
+
+
+    // KEMBALI KE LOGIN
+    const backToLoginButton =
+        document.getElementById(
+            "backToLoginButton"
+        );
+
+    if (backToLoginButton) {
+        backToLoginButton.addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+                backToLogin();
+
+            }
+        );
     }
 
 });
@@ -2251,6 +2324,114 @@ function togglePassword(inputId, button) {
 
 }
 
+/* =====================================================
+   TAMPILKAN HALAMAN LUPA PASSWORD
+===================================================== */
+
+function showForgotPassword() {
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "registerForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.display = "block";
+
+    document.getElementById(
+        "authMessage"
+    ).textContent = "";
+
+}
+
+
+/* =====================================================
+   KEMBALI KE LOGIN
+===================================================== */
+
+function backToLogin() {
+
+    document.getElementById(
+        "forgotPasswordScreen"
+    ).style.display = "none";
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "block";
+
+    document.getElementById(
+        "forgotPasswordMessage"
+    ).textContent = "";
+
+    document.getElementById(
+        "authMessage"
+    ).textContent = "";
+
+}
+
+
+/* =====================================================
+   KIRIM LINK RESET PASSWORD
+===================================================== */
+
+async function sendResetPassword() {
+
+    const email =
+        document
+            .getElementById(
+                "forgotPasswordEmail"
+            )
+            .value
+            .trim();
+
+    const message =
+        document.getElementById(
+            "forgotPasswordMessage"
+        );
+
+    if (!email) {
+
+        message.textContent =
+            "Masukkan email terlebih dahulu.";
+
+        return;
+    }
+
+    message.textContent =
+        "Mengirim link reset password...";
+
+    const { error } =
+        await supabaseClient.auth
+            .resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        window.location.origin +
+                        window.location.pathname
+                }
+            );
+
+    if (error) {
+
+        console.error(
+            "Reset password error:",
+            error
+        );
+
+        message.textContent =
+            "Gagal mengirim link: " +
+            error.message;
+
+        return;
+    }
+
+    message.textContent =
+        "Link reset password sudah dikirim. Cek email kamu.";
+}
 
 /* =====================================================
    AMBIL DATA PROFIL DARI DATABASE
