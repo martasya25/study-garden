@@ -1201,131 +1201,78 @@ function checkAnswer(index) {
         return;
     }
 
+    const q = selectedQuestions[currentQuestion];
+
+    if (!q) {
+        console.error("Soal tidak ditemukan.");
+        return;
+    }
 
     answerLocked = true;
 
+    const answerButtons =
+        document.querySelectorAll(".answer-btn");
 
-    const q =
-        selectedQuestions[currentQuestion];
+    const clickedButton =
+        answerButtons[index];
 
+    const correctButton =
+        answerButtons[q.correct];
 
-    const buttons =
-        document.querySelectorAll(
-            "#answerBox .answer-button"
-        );
-
-
-    buttons.forEach(function(button) {
-
-        button.disabled = true;
-
-    });
-
-
-    game.answered++;
-
-
-    const feedback =
-        document.getElementById("feedback");
-
-
-    if (index === q.correct) {
-
-        buttons[index]
-            .classList.add("correct");
-
-
-        game.correct++;
-
-        game.xp += 20;
-
-        game.coins += 10;
-
-        game.water += 1;
-
-
-        feedback.style.display =
-            "block";
-
-        feedback.style.background =
-            "#c8e6c9";
-
-        feedback.style.color =
-            "#1b5e20";
-
-
-        feedback.innerHTML =
-            "🎉 Jawaban benar! " +
-            "+20 XP • +10 🪙 • +1 💧";
-
+    // Tandai jawaban benar
+    if (correctButton) {
+        correctButton.classList.add("correct");
     }
 
-    else {
+    // Jika jawaban salah
+    if (index !== q.correct) {
 
-        buttons[index]
-            .classList.add("wrong");
+        if (clickedButton) {
+            clickedButton.classList.add("wrong");
+        }
 
-
-        buttons[q.correct]
-            .classList.add("correct");
-
+        alert("❌ Jawaban salah!");
 
         game.lives--;
-
 
         if (game.lives <= 0) {
             game.lives = 3;
         }
 
+    } else {
 
-        feedback.style.display =
-            "block";
+        alert("✅ Jawaban benar!");
 
-        feedback.style.background =
-            "#ffebee";
-
-        feedback.style.color =
-            "#c62828";
-
-
-        feedback.innerHTML =
-            "😅 Belum tepat! " +
-            "Jawaban yang benar: <b>" +
-            q.answers[q.correct] +
-            "</b>";
+        game.xp += 20;
+        game.coins += 10;
+        game.water += 1;
 
     }
-
 
     saveGame();
+    renderGame();
 
-    updateUI();
+    // Lanjut ke soal berikutnya
+    setTimeout(function() {
 
+        currentQuestion++;
 
-    const next =
-        document.getElementById("nextButton");
+        if (
+            currentQuestion <
+            selectedQuestions.length
+        ) {
 
+            answerLocked = false;
+            showQuestion();
 
-    next.style.display = "block";
+        } else {
 
+            finishQuiz();
 
-    /*
-       Kalau soal terakhir,
-       ubah tulisan tombol
-    */
+        }
 
-    if (
-        currentQuestion ===
-        selectedQuestions.length - 1
-    ) {
-
-        next.textContent =
-            "🌱 Selesaikan Quiz";
-
-    }
-
+    }, 700);
 }
-
 
 /* =====================================================
    SOAL BERIKUTNYA / SELESAI
