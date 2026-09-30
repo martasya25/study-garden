@@ -148,29 +148,29 @@ button:active{
     background:#43a047;
     color:white;
 }
+
 .logout-button {
     border: none;
-
-    background: #ffebee;
-
-    color: #c62828;
-
+    background: #ffebee !important;
+    color: #c62828 !important;
     padding: 11px 17px;
-
     border-radius: 15px;
-
     white-space: nowrap;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: 0.2s ease;
+    position: relative;
+    z-index: 1000;
 }
 
 .logout-button:hover {
-    background: #ffcdd2;
+    background: #ffcdd2 !important;
 }
+
+.logout-button:active {
+    transform: scale(0.97);
+}
+
 /* ==================================================
    ANGGOTA KELOMPOK
 ================================================== */
