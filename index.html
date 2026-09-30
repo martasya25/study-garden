@@ -521,12 +521,137 @@
 
     <!-- PILIH MATA PELAJARAN -->
 
+<!-- ==================================================
+     PILIH MATA PELAJARAN
+================================================== -->
+
 <div
     class="study-box"
     id="subjectBox">
 
     <h2>
-        📚 Pilih Materi
+        📚 Pilih Mata Pelajaran
+    </h2>
+
+    <p style="
+        color:#718373;
+        margin-top:7px;
+    ">
+        Pilih mata pelajaran yang ingin kamu pelajari! 🌱
+    </p>
+
+
+    <div class="subjects">
+
+        <button
+            class="subject-button"
+            onclick="showMaterials('Matematika')">
+
+            <span>🔢</span>
+
+            <b>
+                Matematika
+            </b>
+
+            <small>
+                2 materi
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="showMaterials('IPA')">
+
+            <span>🧪</span>
+
+            <b>
+                IPA
+            </b>
+
+            <small>
+                2 materi
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="showMaterials('Bahasa Indonesia')">
+
+            <span>📚</span>
+
+            <b>
+                Bahasa Indonesia
+            </b>
+
+            <small>
+                2 materi
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="showMaterials('Bahasa Inggris')">
+
+            <span>🇬🇧</span>
+
+            <b>
+                Bahasa Inggris
+            </b>
+
+            <small>
+                2 materi
+            </small>
+
+        </button>
+
+
+        <button
+            class="subject-button"
+            onclick="showMaterials('IPS')">
+
+            <span>🌍</span>
+
+            <b>
+                IPS
+            </b>
+
+            <small>
+                2 materi
+            </small>
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     PILIH MATERI
+================================================== -->
+
+<div
+    class="study-box"
+    id="materialBox"
+    style="display:none;">
+
+    <button
+        class="back-button"
+        onclick="backToSubjects()">
+
+        ← Kembali ke Mata Pelajaran
+
+    </button>
+
+
+    <h2 id="materialSubjectTitle">
+        📚 Materi
     </h2>
 
     <p style="
@@ -537,241 +662,10 @@
     </p>
 
 
-    <div class="subjects">
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('persamaan-linear')">
-
-            <span>🔢</span>
-
-            <b>
-                Persamaan Linear
-            </b>
-
-            <small>
-                Matematika
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('fungsi')">
-
-            <span>📈</span>
-
-            <b>
-                Fungsi
-            </b>
-
-            <small>
-                Matematika
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('teks-eksplanasi')">
-
-            <span>📖</span>
-
-            <b>
-                Teks Eksplanasi
-            </b>
-
-            <small>
-                Bahasa Indonesia
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('teks-argumentasi')">
-
-            <span>✍️</span>
-
-            <b>
-                Teks Argumentasi
-            </b>
-
-            <small>
-                Bahasa Indonesia
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('procedure-text')">
-
-            <span>🇬🇧</span>
-
-            <b>
-                Procedure Text
-            </b>
-
-            <small>
-                Bahasa Inggris
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('narrative-text')">
-
-            <span>📚</span>
-
-            <b>
-                Narrative Text
-            </b>
-
-            <small>
-                Bahasa Inggris
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('ekosistem')">
-
-            <span>🌳</span>
-
-            <b>
-                Ekosistem
-            </b>
-
-            <small>
-                IPA
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('sistem-pernapasan')">
-
-            <span>🫁</span>
-
-            <b>
-                Sistem Pernapasan
-            </b>
-
-            <small>
-                IPA
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('interaksi-sosial')">
-
-            <span>👥</span>
-
-            <b>
-                Interaksi Sosial
-            </b>
-
-            <small>
-                IPS
-            </small>
-
-        </button>
-
-
-        <button
-            class="subject-button"
-            onclick="openMaterial('perubahan-sosial')">
-
-            <span>🌍</span>
-
-            <b>
-                Perubahan Sosial
-            </b>
-
-            <small>
-                IPS
-            </small>
-
-        </button>
-
-    </div>
-
-</div>
-
-    <!-- ==================================================
-     DETAIL MATERI
-================================================== -->
-
-<div
-    class="material-box"
-    id="materialBox"
-    style="display:none;">
-
-    <button
-        class="back-button"
-        onclick="backToMaterials()">
-
-        ← Kembali ke Materi
-
-    </button>
-
-
-    <div class="material-header">
-
-        <div
-            class="material-icon"
-            id="materialIcon">
-            📚
-        </div>
-
-        <div>
-
-            <h2 id="materialTitle">
-                Judul Materi
-            </h2>
-
-            <p id="materialCategory">
-                Mata Pelajaran
-            </p>
-
-        </div>
-
-    </div>
-
-
     <div
-        class="material-content"
-        id="materialContent">
-
-        <p>
-            Isi materi akan muncul di sini.
-        </p>
-
+        class="subjects"
+        id="materialList">
     </div>
-
-
-    <button
-        class="auth-submit"
-        id="startMaterialQuizButton"
-        onclick="startMaterialQuiz()">
-
-        🌱 Mulai Kuis
-
-    </button>
 
 </div>
     
