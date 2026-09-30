@@ -162,7 +162,41 @@
 </form>
 
 
-        <p id="authMessage" class="auth-message"></p>
+<p id="authMessage" class="auth-message"></p>
+
+<div id="forgotPasswordScreen" style="display:none;">
+
+    <h2>🔑 Lupa Password?</h2>
+
+    <p>Masukkan email yang kamu gunakan untuk mendaftar.</p>
+
+    <input
+        type="email"
+        id="forgotPasswordEmail"
+        placeholder="Masukkan email"
+        required
+    >
+
+    <button
+        type="button"
+        class="auth-submit"
+        id="sendResetButton">
+        📩 Kirim Link Reset
+    </button>
+
+    <a
+        href="#"
+        class="forgot-password"
+        id="backToLoginButton">
+        ← Kembali ke Login
+    </a>
+
+    <p
+        id="forgotPasswordMessage"
+        class="auth-message">
+    </p>
+
+</div>
 
     </div>
 
