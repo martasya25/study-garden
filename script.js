@@ -1798,19 +1798,39 @@ window.updatePlantInDatabase = async function(plant) {
         return;
     }
 
-    const { error } = await supabaseClient
+    console.log("UPDATE DATABASE:");
+    console.log("ID pengguna:", game.id_pengguna);
+    console.log("ID tanaman:", plant.id_tanaman);
+    console.log("Growth:", plant.growth);
+
+    const { data, error } = await supabaseClient
         .from("kebun_pengguna")
         .update({
             persentase_pertumbuhan: plant.growth
         })
         .eq("id_pengguna", game.id_pengguna)
-        .eq("id_tanaman", plant.id_tanaman);
+        .eq("id_tanaman", plant.id_tanaman)
+        .select();
+
+    console.log("HASIL UPDATE:", data);
+    console.log("ERROR UPDATE:", error);
 
     if (error) {
+
         console.error(
             "Gagal update pertumbuhan tanaman:",
             error
         );
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        console.error(
+            "UPDATE TIDAK MENEMUKAN BARIS TANAMAN!"
+        );
+
         return;
     }
 
@@ -1819,62 +1839,6 @@ window.updatePlantInDatabase = async function(plant) {
         plant.growth + "%"
     );
 };
-/* =====================================================
-   PANEN TANAMAN
-===================================================== */
-
-function harvestPlant(index) {
-
-    const plant = game.plants[index];
-
-    if (!plant) {
-        return;
-    }
-
-    if (plant.growth < 100) {
-
-        alert(
-            "🌱 Tanaman ini belum siap dipanen!"
-        );
-
-        return;
-    }
-
-    /*
-       Setiap panen mendapatkan
-       +1 ❤️
-    */
-
-    game.lives += 1;
-
-    /*
-       Hapus tanaman yang sudah dipanen
-    */
-
-    game.plants.splice(index, 1);
-
-    /*
-       Bonus panen
-    */
-
-    game.xp += 10;
-    game.coins += 10;
-
-    saveGame();
-
-    updateUI();
-
-    renderPlants();
-
-    alert(
-        "🎉 Panen berhasil!\n\n" +
-        "🌾 Tanaman berhasil dipanen!\n" +
-        "❤️ +1 Nyawa\n" +
-        "⭐ +10 XP\n" +
-        "🪙 +10 Koin"
-    );
-}
-
 
 /* =====================================================
    SIRAM TANAMAN
