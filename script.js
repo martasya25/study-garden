@@ -1357,17 +1357,21 @@ async function savePlantToDatabase(plant) {
         return;
     }
 
-    const { error } =
-        await supabaseClient
-            .from("kebun_pengguna")
-            .insert({
-                id_pengguna: game.id_pengguna,
-                id_tanaman: plant.id_tanaman,
-                posisi: null,
-                persentase_pertumbuhan: 0,
-                status_tanaman: "Tumbuh"
-            });
+const { data, error } =
+    await supabaseClient
+        .from("kebun_pengguna")
+        .insert({
+            id_pengguna: game.id_pengguna,
+            id_tanaman: plant.id_tanaman,
+            posisi: null,
+            persentase_pertumbuhan: 0,
+            status_tanaman: "Tumbuh"
+        })
+        .select()
+        .single();
 
+console.log("DATA KEBUN BARU:", data);
+console.log("ERROR SIMPAN TANAMAN:", error);
     if (error) {
 
         console.error(
