@@ -1181,14 +1181,12 @@ function showQuestion() {
                 answer;
 
 
-            button.addEventListener(
-                "click",
-                function() {
+button.addEventListener("click", function() {
 
-                    checkAnswer(index);
+    console.log("TOMBOL JAWABAN DIKLIK:", index);
 
-                }
-            );
+    checkAnswer(index);
+});
 
 
             answerBox.appendChild(
