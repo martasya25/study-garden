@@ -1273,38 +1273,45 @@ function checkAnswer(index) {
 
     updateUI();
 
-setTimeout(function() {
+    setTimeout(function() {
 
-    currentQuestion++;
-
-    console.log(
-        "Progress quiz:",
-        currentQuestion,
-        "/",
-        selectedQuestions.length
-    );
-
-    if (
-        currentQuestion <
-        selectedQuestions.length
-    ) {
-
-        answerLocked = false;
-
-        showQuestion();
-
-    } else {
+        currentQuestion++;
 
         console.log(
-            "SOAL TERAKHIR SELESAI — MEMANGGIL FINISH QUIZ"
+            "Progress quiz:",
+            currentQuestion,
+            "/",
+            selectedQuestions.length
         );
 
-        finishQuiz();
+        if (
+            currentQuestion <
+            selectedQuestions.length
+        ) {
 
-    }
+            answerLocked = false;
 
-}, 700);
-}
+            showQuestion();
+
+        } else {
+
+            console.log(
+                "SOAL TERAKHIR SELESAI — MEMANGGIL FINISH QUIZ"
+            );
+
+            finishQuiz();
+
+        }
+
+    }, 700);
+
+}   // ← INI WAJIB ADA
+
+/* =====================================================
+   SOAL BERIKUTNYA / SELESAI
+===================================================== */
+
+function nextQuestion() {
 /* =====================================================
    SOAL BERIKUTNYA / SELESAI
 ===================================================== */
@@ -3869,4 +3876,3 @@ console.log(
     "openMaterial:",
     typeof openMaterial
 );
-}
