@@ -1210,21 +1210,22 @@ function checkAnswer(index) {
 
     answerLocked = true;
 
-    const answerButtons =
-        document.querySelectorAll(".answer-btn");
-
     const clickedButton =
-        answerButtons[index];
+        document.querySelector(
+            `button[onclick="checkAnswer(${index})"]`
+        );
 
     const correctButton =
-        answerButtons[q.correct];
+        document.querySelector(
+            `button[onclick="checkAnswer(${q.correct})"]`
+        );
 
-    // Tandai jawaban benar
+    // Jawaban benar
     if (correctButton) {
         correctButton.classList.add("correct");
     }
 
-    // Jika jawaban salah
+    // Jawaban salah
     if (index !== q.correct) {
 
         if (clickedButton) {
@@ -1246,13 +1247,12 @@ function checkAnswer(index) {
         game.xp += 20;
         game.coins += 10;
         game.water += 1;
-
     }
 
     saveGame();
     renderGame();
 
-    // Lanjut ke soal berikutnya
+    // Tunggu sebentar lalu lanjut
     setTimeout(function() {
 
         currentQuestion++;
@@ -1268,7 +1268,6 @@ function checkAnswer(index) {
         } else {
 
             finishQuiz();
-
         }
 
     }, 700);
